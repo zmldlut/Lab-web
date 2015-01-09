@@ -3,6 +3,9 @@ package cn.edu.dlut.chuangxin.action;
 import java.util.regex.Pattern;
 
 import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
+import cn.edu.dlut.chuangxin.dao.proxy.GradeDaoProxy;
+import cn.edu.dlut.chuangxin.dao.proxy.MajorDaoProxy;
+import cn.edu.dlut.chuangxin.dao.proxy.StudentDaoProxy;
 import cn.edu.dlut.chuangxin.model.Student;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -40,7 +43,7 @@ public class CheckStudentRegisterInfoAction extends ActionSupport{
 	boolean checkStdnum(String stdnum) throws Exception{
 		if(stdnum == null)
 			return false;
-		if(DaoFactory.getStudentDaoInstance().getPasswordFromStdnum(stdnum) != null)
+		if(((StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getPasswordFromStdnum(stdnum) != null)
 			return false;
 		return matchPattern("^[0-9]{8,9}$", stdnum);
 	}
@@ -56,13 +59,13 @@ public class CheckStudentRegisterInfoAction extends ActionSupport{
 	}
 	
 	boolean checkMajor(int major_id) throws Exception{
-		if(DaoFactory.getMajorDaoInstance().getNameFromID(major_id) == null)
+		if(((MajorDaoProxy) DaoFactory.getDaoInstance(MajorDaoProxy.class)).getNameFromID(major_id) == null)
 			return false;
 		return true;
 	}
 	
 	boolean checkGrade(int grade_id) throws Exception{
-		if(DaoFactory.getGradeDaoInstance().getNameFromID(grade_id) == null)
+		if(((GradeDaoProxy) DaoFactory.getDaoInstance(GradeDaoProxy.class)).getNameFromID(grade_id) == null)
 			return false;
 		return true;
 	}
@@ -132,7 +135,7 @@ public class CheckStudentRegisterInfoAction extends ActionSupport{
 		setResult("OK");
 		try {
 			if(checkStudentInfo(getStudentInfo())){
-				if(DaoFactory.getStudentDaoInstance().doCreate(getStudentInfo()) == false){
+				if(((StudentDaoProxy)DaoFactory.getDaoInstance(StudentDaoProxy.class)).doCreate(getStudentInfo()) == false){
 					setResult("Êý¾Ý¿â´íÎó");
 				}
 			}

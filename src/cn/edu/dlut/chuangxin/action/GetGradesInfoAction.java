@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
+import cn.edu.dlut.chuangxin.dao.proxy.GradeDaoProxy;
 import cn.edu.dlut.chuangxin.model.Grade;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -42,7 +43,7 @@ public class GetGradesInfoAction extends ActionSupport{
 	public String execute(){
 		ArrayList<Grade> dataList = null;
 		try {
-			dataList = (DaoFactory.getGradeDaoInstance().getGrades());
+			dataList = (((GradeDaoProxy) DaoFactory.getDaoInstance(GradeDaoProxy.class)).getGrades());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

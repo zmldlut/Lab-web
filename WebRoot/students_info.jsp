@@ -116,7 +116,7 @@
         		delTR();
         		var params = {
     				"page" : page,
-    				"pageCount" : 2
+    				"pageCount" : 20
     			};
    				$.ajax({
    					type : "post",
@@ -160,7 +160,7 @@
     </head>
     <body>
     <jsp:include page="menu.jsp" />
-    <div id="content">
+    <div id="content" style="min-height: 1000px">
             <div id="content-header">
                 <h1>学生信息</h1>
                 <div class="btn-group">

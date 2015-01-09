@@ -8,6 +8,7 @@ import cn.edu.dlut.chuangxin.db.ConnectionPool;
 
 
 public class BaseDaoProxy {
+	
 	protected ConnectionPool connPool = null;
 	protected Connection conn = null;
 	protected BaseDaoImpl dao = null;
@@ -31,7 +32,7 @@ public class BaseDaoProxy {
 		try {
 			dao = daoClass.newInstance();
 			dao.setConn(conn);
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
+import cn.edu.dlut.chuangxin.dao.proxy.StudentDaoProxy;
 import cn.edu.dlut.chuangxin.model.Student;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -77,8 +78,8 @@ public class GetStudentsInfoAction extends ActionSupport{
 	public String execute(){
 		ArrayList<Student> dataList = null;
 		try {
-			dataList = (DaoFactory.getStudentDaoInstance().getStudents(page, pageCount));
-			int sz = DaoFactory.getStudentDaoInstance().getStudentsSize() + pageCount - 1;
+			dataList = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudents(page, pageCount);
+			int sz = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudentsSize() + pageCount - 1;
 			setMaxPage(sz / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

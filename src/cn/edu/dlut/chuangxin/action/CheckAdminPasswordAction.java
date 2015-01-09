@@ -1,6 +1,7 @@
 package cn.edu.dlut.chuangxin.action;
 
 import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
+import cn.edu.dlut.chuangxin.dao.proxy.AdminDaoProxy;
 import cn.edu.dlut.chuangxin.model.Admin;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -33,7 +34,7 @@ public class CheckAdminPasswordAction extends ActionSupport{
 		System.out.println("³¢ÊÔµÇÂ½£º£ºÓÃ»§Ãû£º" + getAdmin().getName() + ", ÃÜÂë£º" + getAdmin().getPassword());
 		String result = null;
 		try {
-			result = DaoFactory.getAdminDaoInstance().getPasswordFromName(getAdmin().getName());
+			result = ((AdminDaoProxy)DaoFactory.getDaoInstance(AdminDaoProxy.class)).getPasswordFromName(getAdmin().getName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

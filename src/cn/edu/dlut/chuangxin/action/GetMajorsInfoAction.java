@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
+import cn.edu.dlut.chuangxin.dao.proxy.MajorDaoProxy;
 import cn.edu.dlut.chuangxin.model.Major;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -42,7 +43,7 @@ public class GetMajorsInfoAction extends ActionSupport{
 	public String execute(){
 		ArrayList<Major> dataList = null;
 		try {
-			dataList = (DaoFactory.getMajorDaoInstance().getMajors());
+			dataList = ((MajorDaoProxy) DaoFactory.getDaoInstance(MajorDaoProxy.class)).getMajors();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

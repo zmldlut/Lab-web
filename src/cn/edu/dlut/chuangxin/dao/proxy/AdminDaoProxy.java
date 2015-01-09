@@ -1,35 +1,22 @@
 package cn.edu.dlut.chuangxin.dao.proxy;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import cn.edu.dlut.chuangxin.dao.AdminDao;
 import cn.edu.dlut.chuangxin.dao.impl.AdminDaoImpl;
-import cn.edu.dlut.chuangxin.db.ConnectionPool;
 import cn.edu.dlut.chuangxin.model.Admin;
 
 public class AdminDaoProxy extends BaseDaoProxy implements AdminDao{
-
-	private ConnectionPool connPool = null;
-	private AdminDaoImpl dao = null;
-	private Connection conn = null;
 	
-	public AdminDaoProxy() {
-		try {
-			this.connPool = ConnectionPool.getInstance();
-			this.conn = connPool.getConnection();
-			this.dao = new AdminDaoImpl(conn);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	AdminDaoProxy(){
+		super(AdminDaoImpl.class);
 	}
-
+	
 	@Override
 	public ArrayList<String> getNames() {
 		// TODO Auto-generated method stub
 		ArrayList<String> result = null;
-		result = this.dao.getNames();
+		result = ((AdminDaoImpl) super.dao).getNames();
 		connPool.returnConnection(conn);
 		return result;
 	}
@@ -38,7 +25,7 @@ public class AdminDaoProxy extends BaseDaoProxy implements AdminDao{
 	public String getPasswordFromName(String name) {
 		// TODO Auto-generated method stub
 		String result = null;
-		result = this.dao.getPasswordFromName(name);
+		result = ((AdminDaoImpl) super.dao).getPasswordFromName(name);
 		connPool.returnConnection(conn);
 		return result;
 	}

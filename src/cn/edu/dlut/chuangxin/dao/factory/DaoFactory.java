@@ -1,12 +1,13 @@
 package cn.edu.dlut.chuangxin.dao.factory;
 
-import cn.edu.dlut.chuangxin.dao.proxy.AdminDaoProxy;
-import cn.edu.dlut.chuangxin.dao.proxy.GradeDaoProxy;
-import cn.edu.dlut.chuangxin.dao.proxy.MajorDaoProxy;
-import cn.edu.dlut.chuangxin.dao.proxy.StudentDaoProxy;
+import cn.edu.dlut.chuangxin.dao.proxy.BaseDaoProxy;
 
 public class DaoFactory {
-
+	
+	public static BaseDaoProxy getDaoInstance(Class<? extends BaseDaoProxy> daoClass) throws Exception {
+		return daoClass.newInstance();
+	}
+/*
 	public static AdminDaoProxy getAdminDaoInstance() throws Exception{
 		return new AdminDaoProxy();
 	}
@@ -22,4 +23,5 @@ public class DaoFactory {
 	public static GradeDaoProxy getGradeDaoInstance() throws Exception{
 		return new GradeDaoProxy();
 	}
+*/
 }
