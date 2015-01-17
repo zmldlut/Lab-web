@@ -1,7 +1,6 @@
 package cn.edu.dlut.chuangxin.dao.impl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,9 +9,6 @@ import cn.edu.dlut.chuangxin.dao.GradeDao;
 import cn.edu.dlut.chuangxin.model.Grade;
 
 public class GradeDaoImpl extends BaseDaoImpl implements GradeDao{
-	
-	private Connection conn = null;
-	private PreparedStatement pstmt = null;
 	
 	public GradeDaoImpl() {}
 	

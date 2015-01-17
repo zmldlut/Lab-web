@@ -8,7 +8,7 @@ import cn.edu.dlut.chuangxin.model.Admin;
 
 public class AdminDaoProxy extends BaseDaoProxy implements AdminDao{
 	
-	AdminDaoProxy(){
+	public AdminDaoProxy(){
 		super(AdminDaoImpl.class);
 	}
 	

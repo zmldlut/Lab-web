@@ -1,367 +1,124 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-<TITLE> simulate combox control - http://www.never-online.net </TITLE>
-<META NAME="Generator" CONTENT="EditPlus">
-<META NAME="Author" CONTENT="">
-<META NAME="Keywords" CONTENT="">
-<META NAME="Description" CONTENT="">
-<style>
-body, input
-{
-	font-family: verdana;
-	font-size: 9pt;
-	background:#000000;
-}
-.CtlSelect
-{
-	border: 1px solid #3a3b3c;
-	font-family: verdana;
-	height: 20px;
-	color: #fff;
-	background: #1c1e1f;
-}
-.selected
-{
-	background: #000;
-	color: #ffffff;
-	height: 20px;
-}
-.unselected
-{
-	height: 20px;
-	color: #fff;
-	line-height: 120%;
-}
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
+<!DOCTYPE html>
+<% 
+	String path = request.getRequestURI();
+	String basePath = request.getScheme() + "://"
+        + request.getServerName() + ":" + request.getServerPort()
+        + path;
+%>
+<base href="<%=basePath%>">
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>日期选择器：jquery datepicker的使用</title>
+<meta name="keywords" content="datepicker, jquery插件" />
+<meta name="description" content="Helloweba演示平台，演示XHTML、CSS、jquery、PHP案例和示例" />
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+<style type="text/css">
+a{color:#007bc4/*#424242*/; text-decoration:none;}
+a:hover{text-decoration:underline}
+ol,ul{list-style:none}
+table{border-collapse:collapse;border-spacing:0}
+body{height:100%; font:12px/18px Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif; color:#51555C;}
+img{border:none}
+.demo{width:500px; margin:20px auto}
+.demo h4{height:32px; line-height:32px; font-size:14px}
+.demo h4 span{font-weight:500; font-size:12px}
+.demo p{line-height:28px;}
+input{width:108px; height:20px; line-height:20px; padding:2px; border:1px solid #d3d3d3}
 </style>
-</HEAD>
-<BODY>
-<SCRIPT LANGUAGE="JavaScript">
-<!--
-function $(objID)
-{
-	return document.getElementById(objID);
-};
-function Offset(e)
-{
-	var t = e.offsetTop;
-	var l = e.offsetLeft;
-	var w = e.offsetWidth;
-	var h = e.offsetHeight-2;
-	while(e=e.offsetParent)
-	{
-		t+=e.offsetTop;
-		l+=e.offsetLeft;
-	}
-	return {
-		top : t,
-		left : l,
-		width : w,
-		height : h
-	}
-}
-//-----------------------------------------------
-function simulateSelect() { with(this)
-{
-	this.IDs = [];
-	this.name = this;
-	//  property for beta Version
-	//  can editable combox
-	this.readonly = true;
-	this.height = 20;
-	this.width = null;
-	this.ctlStyle = "CtlSelect";
-	this.selStyle = "selected";
-	this.unselStyle = "unselected";
-	this.elementPrefix = "e__";
-	this.inputPrefix = "i__";
-	this.containerPrefix = "c__";
-	this.buttonPrefix = "b__";
-	return this;
-}};
-simulateSelect.prototype.init = function(ctlSelIDs) { with(this)
-{
-	eval(name).append(ctlSelIDs);
-	eval(name).simulates();
-}};
-simulateSelect.prototype.style = function() { with(this)
-{
-	ctlStyle = arguments[0];
-	selStyle = arguments[1];
-	unselStyle = arguments[2];
-}};
-//-----------------------------------------------
-simulateSelect.prototype.append = function(ctlSelIDs) { with(this)
-{
-	if( ctlSelIDs.indexOf(",")>0 )
-	{
-		var arrCtlSel = ctlSelIDs.split(",");
-		for(var i=0; i<arrCtlSel.length; i++)
-		{
-			eval(name).IDs.push(arrCtlSel[i]);
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-datepicker.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#date_1").datepicker();
+	$("#date_2").datepicker({
+		//navigationAsDateFormat: true,
+		dateFormat: 'yy年mm月dd日'
+	});
+	$("#date_3").datepicker({
+		minDate: -30,
+		maxDate: 0
+	});
+	$("#date_4").datepicker({
+		altField: "#alternate",
+		altFormat: "yy年MMd日,DD"
+	});
+	$("#datepicker").datepicker({
+		showOtherMonths: true,
+		selectOtherMonths: false
+	});
+	$("#date_6").datepicker({
+		showWeek: true
+	});
+	$("#date_7").datepicker({
+		numberOfMonths: 3,
+		showButtonPanel: true
+	});
+	$("#date_8").datepicker({
+		showOn: "button",
+		buttonImage: "img/calendar.gif",
+		buttonImageOnly: true
+	});
+	$("#date_9").datepicker({
+		onSelect: function(dateText,inst){
+			alert("您选择的日期是："+dateText);
+			alert(inst.value);
 		}
-	}
-	else
-	{
-		eval(name).IDs.push(ctlSelIDs);
-	}
-}};
-simulateSelect.prototype.checkupOnMouseDown = function(e) { with(this)
-{
-	// here compatible mf.
-	var el = e ? e.srcElement : e.target;
-	if( el.id.indexOf(elementPrefix)>-1 || 
-	el.id.indexOf(inputPrefix)>-1 || 
-	el.id.indexOf(containerPrefix)>-1 || 
-	el.id.indexOf(buttonPrefix)>-1 )
-	{
-		return;
-	}
-	else
-	{
-		for(var i=0; i<eval(name).IDs.length; i++)
-		if( $(containerPrefix + IDs[i]) )
-		$(containerPrefix + eval(name).IDs[i]).style.display = "none";
-	}
-}};
-simulateSelect.prototype.simulates = function() { with(this)
-{
-	for(var i=0; i<IDs.length; i++)
-	eval(name).simulate(IDs[i]);
-}};
-simulateSelect.prototype.simulate = function(ctlSelID) { with (this)
-{
-	var input;
-	var button;
-	var object;
-	var offset;
-	object = $(ctlSelID);
-	offset = Offset(object);
-	input = document.createElement("INPUT");
-	button = document.createElement("BUTTON");
-	button.setAttribute("id", buttonPrefix + ctlSelID);
-	//button.value = "⊿";
-	button.value = "6";
-	button.style.fontFamily = "Webdings, Marlett";
-	button.style.background = "";
-	button.onclick = input.onclick = function()
-	{
-		this.blur();
-		eval(name).expand(ctlSelID, offset);
-	}
-	input.onselectstart = function() { eval(name).expand(ctlSelID, offset); event.returnValue = false; };
-	input.setAttribute("id", inputPrefix + ctlSelID);
-	input.title = button.title = "click expand options";
-	input.style.cursor = button.style.cursor = "default";
-	input.className = button.className = ctlStyle;
-	input.style.width = (width>0 ? width : object.offsetWidth);
-	height ? input.style.height=button.style.height=height : "";
-	input.value = object[0].text;
-	if( readonly==true ) input.readOnly=true;
-	// this method is only IE.
-	object.insertAdjacentElement("afterEnd",button);
-	object.insertAdjacentElement("afterEnd",input);
-	object.style.display = 'none';
-}};
-simulateSelect.prototype.expand = function(ctlSelID, offset) { with(this)
-{
-	var div, btn_off;
-	var object = $(ctlSelID);
-	if( !$(containerPrefix + ctlSelID) )
-	{
-		div = document.createElement("DIV");
-		div.style.position = "absolute";
-		div.style.display = "block";
-div.style.height = "300px";
-		div.style.overflow = "auto";
-		div.setAttribute("id", containerPrefix + ctlSelID);
-		div.className = ctlStyle;
-		div.style.left = offset.left;
-		div.style.top = offset.top + offset.height;
-		div.style.width = (width ? width : offset.width) + 20;
-		div.style.height = 300;
-		document.body.appendChild(div);
-		for(var i=0; i<object.length; i++)
-		{
-			div = document.createElement("DIV");
-			div.setAttribute("id", div.id = elementPrefix + ctlSelID + i);
-			div.style.cursor = "default";
-			if( object[i].text==$(inputPrefix + ctlSelID).value )
-			div.className = selStyle;
-			else
-			div.className = unselStyle;
-			div.innerText = div.title = object[i].text;
-			div.style.height = height;
-			div.setAttribute("value", object[i].value);
-			div.onmouseover = function()
-			{
-				for(var j=0; j<$(containerPrefix + ctlSelID).childNodes.length; j++)
-				{
-					if($(containerPrefix + ctlSelID).childNodes[j]==this)
-					$(containerPrefix + ctlSelID).childNodes[j].className = selStyle;
-					else
-					$(containerPrefix + ctlSelID).childNodes[j].className = unselStyle;
-				}						
-			};
-			div.onclick = function()
-			{
-				$(inputPrefix + ctlSelID).value = this.innerText;
-				$(containerPrefix + ctlSelID).style.display = "none";
-			};
-			$(containerPrefix + ctlSelID).appendChild(div);
-		}
-		return;
-	}
-	if( $(containerPrefix + ctlSelID).style.display=="none" )
-	{
-		for(var i=0; i<object.length; i++)
-		{
-			if( object[i].text==$(inputPrefix + ctlSelID).value )
-			$(elementPrefix + ctlSelID + i).className = selStyle;
-			else
-			$(elementPrefix + ctlSelID + i).className = unselStyle;
-		}
-		$(containerPrefix + ctlSelID).style.display="block";
-		return;
-	}
-	if( $(containerPrefix + ctlSelID).style.display=="block" )
-	{
-		$(containerPrefix + ctlSelID).style.display="none";
-		return;
-	}
-}};
-simulateSelect.prototype.getValue = function(ctlSelID) { with(this)
-{
-	if( $(inputPrefix + ctlSelID) )
-	return $(inputPrefix + ctlSelID).value;
-	else
-	return null;
-}};
-simulateSelect.prototype.addEvent = function(w, h) { with(this)
-{
-}};
-//-----------------------------------------------
-//window.onerror = Function("return true;");
-//  IE only.
-document.attachEvent("onmousedown", function() {
-						a.checkupOnMouseDown(event);
-						//b.checkupOnMouseDown(event);
-						//c.checkupOnMouseDown(event)
-						}
-					);
-//-->
-</SCRIPT>
-<p>
-<select id="s1">
-<option value="- please select your options -"> - please select your options -</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-<option value="1">1option1</option>
-<option value="2">1option2</option>
-<option value="3">1option3</option>
-<option value="4">1option4</option>
-<option value="5">1option5</option>
-</select>
-</p>
-<SCRIPT LANGUAGE="JavaScript">
-<!--
-	var a = new simulateSelect();
-	a.style("CtlSelect", "selected", "unselected");
-	a.init("s1");
-//-->
-</SCRIPT>
-</BODY>
-</HTML>
+	});
+});
+</script>
+</head>
+
+<body>
+<div id="header">
+   <div id="logo"><h1><a href="http://www.helloweba.com" title="返回helloweba首页">helloweba</a></h1></div>
+</div>
+<div id="main">
+   <h2 class="top_title"><a href="http://www.helloweba.com/view-blog-168.html">日期选择器：jquery datepicker的使用</a></h2>
+   <div class="demo">
+      <h4>1、默认格式：<span>yy-mm-dd</span></h4>
+      <p>日期：<input type="text" id="date_1" readonly /></p>
+   </div>
+   <div class="demo" id="s2">
+      <h4>2、格式化日期：<span>yy年mm月dd日</span></h4>
+      <p>日期：<input type="text" id="date_2" readonly /></p>
+   </div>
+   <div class="demo" id="s3">
+      <h4>3、设置日期可选范围：<span>当前日期前30天</span></h4>
+      <p>日期：<input type="text" id="date_3" readonly /></p>
+   </div>
+   <div class="demo" id="s4">
+      <h4>4、关联同步不同的日期格式：</h4>
+      <p>日期：<input type="text" id="date_4" readonly /> &nbsp; <input type="text" id="alternate"  style="width:150px" /></p>
+   </div>
+   <div class="demo">
+      <h4>5、直接显示日历：</h4>
+      <div id="datepicker"></div> 
+   </div>
+   <div class="demo">
+      <h4>6、显示日期所在一年中的周数：</h4>
+      <p>日期：<input type="text" id="date_6" readonly /></p>
+   </div>
+   <div class="demo" id="s7">
+      <h4>7、显示连续的3个月的日历：</h4>
+      <p>日期：<input type="text" id="date_7" readonly /></p>
+   </div>
+   <div class="demo" id="s8">
+      <h4>8、通过点击图标触发显示日历：</h4>
+      <p>日期：<input type="text" id="date_8" readonly style="height:16px" /></p>
+   </div>
+   <div class="demo" id="s9">
+      <h4>9、选中日期后触发事件：</h4>
+      <p>日期：<input type="text" id="date_9" readonly /></p>
+   </div>
+</div>
+<div id="footer">
+    <p>Powered by helloweba.com  允许转载、修改和使用本站的DEMO，但请注明出处：<a href="http://www.helloweba.com">www.helloweba.com</a></p>
+</div>
+</body>
+</html>

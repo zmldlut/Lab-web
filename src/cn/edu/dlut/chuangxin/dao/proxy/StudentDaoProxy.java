@@ -63,4 +63,32 @@ public class StudentDaoProxy extends BaseDaoProxy implements StudentDao{
 		return null;
 	}
 
+	@Override
+	public ArrayList<Student> getStudents(Student student, int page,
+			int pageCount) {
+		// TODO Auto-generated method stub
+		ArrayList<Student> result = null;
+		result = ((StudentDao) super.dao).getStudents(student, page, pageCount);
+		connPool.returnConnection(conn);
+		return result;
+	}
+
+	@Override
+	public int getStudentsSize(Student student) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		result = ((StudentDao) super.dao).getStudentsSize(student);
+		connPool.returnConnection(conn);
+		return result;
+	}
+
+	@Override
+	public Student getStudentInfoFromStdnum(String stdnum) {
+		// TODO Auto-generated method stub
+		Student result = null;
+		result = ((StudentDao) super.dao).getStudentInfoFromStdnum(stdnum);
+		connPool.returnConnection(conn);
+		return result;
+	}
+
 }

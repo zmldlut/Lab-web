@@ -21,7 +21,16 @@ public class GetStudentsInfoAction extends ActionSupport{
 	private int page = 1;
 	private int pageCount = 10;
 	private int maxPage = -1;
+	private Student studentInfo = null;
 	
+	public Student getStudentInfo() {
+		return studentInfo;
+	}
+
+	public void setStudentInfo(Student studentInfo) {
+		this.studentInfo = studentInfo;
+	}
+
 	public int getMaxPage() {
 		return maxPage;
 	}
@@ -76,10 +85,22 @@ public class GetStudentsInfoAction extends ActionSupport{
 	}
 	
 	public String execute(){
+		System.out.println(studentInfo.toString());
 		ArrayList<Student> dataList = null;
 		try {
-			dataList = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudents(page, pageCount);
-			int sz = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudentsSize() + pageCount - 1;
+			if(studentInfo == null){
+				dataList = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudents(page, pageCount);
+			}
+			else{
+				dataList = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudents(studentInfo, page, pageCount);
+			}
+			int sz = 0;
+			if(studentInfo == null){
+				sz = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudentsSize() + pageCount - 1;
+			}
+			else{
+				sz = ( (StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).getStudentsSize(studentInfo) + pageCount - 1;
+			}
 			setMaxPage(sz / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -64,7 +64,6 @@ public class AdminDaoImpl extends BaseDaoImpl implements AdminDao{
 				e.printStackTrace();
 			}
 		}
-		
 		return result;
 	}
 

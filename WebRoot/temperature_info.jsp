@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="css/bootstrap-v2-2-1.min.css">
         <link rel="stylesheet" href="css/unicorn.main.css" />
         <link rel="stylesheet" href="css/unicorn.grey.css" class="skin-color" />
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
         <style type="text/css">
         	.shortselect{
         		width:80px; background:none; border:none;
@@ -26,16 +27,9 @@
         <script language="javascript" type="text/javascript">
         	var page = 1;
         	var maxPage = 1;
-        	var stdnum = "";
-        	var cardID = "";
-        	var name = "";
-        	var major_id = 0;
-        	var grade_id = 0;
-        	var phone = "";
-        	var email = "";
-        	var qq = "";
+        	var node_id = 0;
         	
-        	var arr=["stdnum", "cardID", "name", "password", "major_id", "grade_id", "phone", "email", "qq"];
+        	var arr=["node_id", "acq_time", "temperature_value"];
         	function addTR(cols){
         		var table = document.getElementById("info");
         		var tr = table.insertRow();
@@ -83,7 +77,7 @@
         			return ;
         		}
         		page = page - 1;
-        		setInfo();
+        		search();
         	}
         	
         	function nxtPage(){
@@ -91,7 +85,7 @@
         			return ;
         		}
         		page = page + 1;
-        		setInfo();
+        		search();
         	}
         	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,123 +111,21 @@
             	var index = obj.selectedIndex;
             	var val = obj.options[index].value;
             	page = parseInt(val);
-            	setInfo();
+            	search();
             }
             
-            function setMajor(){
-    			var params = {};
-    			$.ajax({
-    				type : "post",
-    				url : "admin/getMajorsInfoAction.action",
-    				data : params,
-    				dataType : "text",
-    				success : function(json){
-    					var obj = $.parseJSON(json);
-    					removeAllSOP("searchChoice");
-    					addSOP("searchChoice", "== 请选择专业 ==", 0);
-    					for(var i = 0; i < obj.result.length; i++){
-    						addSOP("searchChoice", obj.result[i].major_name, obj.result[i].id);
-    					}
-    					selectSOP("searchChoice", 0);
-    				},
-    				error : function(json){
-    					alert("error " + json);
-    				}
-    			});
-    		}
-    		
-    		function setGrade(){
-    			var params = {};
-    			$.ajax({
-    				type : "post",
-    				url : "admin/getGradesInfoAction.action",
-    				data : params,
-    				dataType : "text",
-    				success : function(json){
-    					var obj = $.parseJSON(json);
-    					removeAllSOP("searchChoice");
-    					addSOP("searchChoice", "== 请选择年级 ==", 0);
-    					for(var i = 0; i < obj.result.length; i++){
-    						addSOP("searchChoice", obj.result[i].grade_name, obj.result[i].id);
-    					}
-    					selectSOP("searchChoice", 0);
-    				},
-    				error : function(json){
-    					alert("error " + json);
-    				}
-    			});
-    		}
-            
-            function searchMethod(){
-            	var obj=document.getElementById("searchMethod");
-            	var index = obj.selectedIndex;
-            	var val = obj.options[index].value;
-            	if(parseInt(val) == 0){
-            		 removeAllSOP("searchChoice");
-            		 stdnum = "";
-                 	cardID = "";
-                 	name = "";
-                 	major_id = 0;
-                 	grade_id = 0;
-                 	phone = "";
-                 	email = "";
-                 	qq = "";
-                 	setInfo();
-            	}
-            	else if(parseInt(val) == 1){
-            		setMajor();
-            	}
-            	else if(parseInt(val) == 2){
-            		setGrade();
-            	}
-            }
-            
-            function searchChoice(){
-            	var obj=document.getElementById("searchMethod");
-            	var index = obj.selectedIndex;
-            	var valA = obj.options[index].value;
-            	
-            	obj=document.getElementById("searchChoice");
-            	index = obj.selectedIndex;
-            	var valB = obj.options[index].value;
-            	
-            	
-            	stdnum = "";
-            	cardID = "";
-            	name = "";
-            	major_id = 0;
-            	grade_id = 0;
-            	phone = "";
-            	email = "";
-            	qq = "";
-            	
-            	if(parseInt(valA) == 1){
-            		major_id = parseInt(valB);
-            	}
-            	else if(parseInt(valA) == 2){
-            		grade_id = parseInt(valB);
-            	}
-            	
-            	setInfo();
-            }
-        	
-        	function setInfo(){
+        	function search(){
         		delTR();
         		var params = {
     				"page" : page,
     				"pageCount" : 20,
-    				"studentInfo.stdnum" : stdnum,
-    				"studentInfo.cardID" : cardID,
-    				"studentInfo.name" : name,
-    				"studentInfo.major_id" : major_id,
-    				"studentInfo.grade_id" : grade_id,
-    				"studentInfo.phone" : phone,
-    				"studentInfo.email" : email,
-    				"studentInfo.QQ" : qq
+    				"node_id" : node_id,
+    				"start" : $("#startDP").val(),
+    				"end" : $("#endDP").val()
     			};
    				$.ajax({
    					type : "post",
-   					url : "admin/getStudentsInfoAction.action",
+   					url : "admin/getTemperatureInfoAction.action",
    					data : params,
    					dataType : "text",
    					success : function(json){
@@ -267,13 +159,35 @@
         	}
         	
         	window.onload = function () {
-        		setInfo();
+        		$("#startDP").datepicker({
+        			showOn: "button",
+        			buttonImage: "img/calendar.gif",
+        			buttonImageOnly: true,
+        			maxDate: 0,
+        			onSelect:function(dateText,inst){
+        				$("#endDP").datepicker("option","minDate",dateText);
+        			}
+        		});
+        		//$("#startDP").datepicker("set");
+        		$("#startDP").datepicker("setDate", "-7");
+        		$("#endDP").datepicker({
+        			showOn: "button",
+        			buttonImage: "img/calendar.gif",
+        			buttonImageOnly: true,
+        			maxDate: 0,
+        			onSelect:function(dateText,inst){
+        				$("#startDP").datepicker("option","maxDate",dateText);
+        			}
+        		});
+        		$("#endDP").datepicker("setDate", "-0");
+        		search();
+        		//setInfo();
 			}
 		</script>
     </head>
     <body>
     <jsp:include page="menu.jsp" />
-    <div id="content" style="min-height: 1000px">
+    <div id="content" style="min-height: 2000px">
             <div id="content-header">
                 <h1>学生信息</h1>
                 <div class="btn-group">
@@ -305,31 +219,29 @@
                         <div class="widget-title">
                         	<span class="icon"><i class="icon-signal"></i></span>
                         	<h5>Site Statistics</h5>
-                        	<select id="searchMethod" class="form-control" style="width: 7%;height: 80%;margin-top: 0.25%;" class="select" onchange="searchMethod()">
-                        		<option value="0" selected="selected">全部学生</option>
-                        		<option value="1" >按分组</option>
-                        		<option value="2" >按年级</option>
-                        	</select>
-                        	<select id="searchChoice" class="form-control" style="width: 12%;height: 80%;margin-top: 0.25%;" class="select" onchange="searchChoice()">
-                        	</select>
+                        	<p>
+	                        	Search : <input type="text" id="startDP" readonly style="width: 5%;height: 80%;margin-top: 0.25%" />
+	                        	<i class="icon-arrow-right"></i>
+	                        	<input type="text" id="endDP" readonly style="width: 5%;height: 80%;margin-top: 0.25%" />
+	                        	<select id="searchMethod" class="form-control" style="width: 5%;height: 80%;margin-top: 0.25%" class="select" onchange="searchMethod()">
+	                        		<option value="0" selected="selected">全部结点</option>
+	                        		<option value="1" >1</option>
+	                        		<option value="2" >2</option>
+                        		</select>
+	                        	<a href="javascript:search()" class="btn btn-mini" ><i class="icon-search"></i></a>
+                        	</p>
                         	<div class="buttons">
-                        		<a href="#" class="btn btn-mini"><i class="icon-refresh"></i> Update data</a>
+                        		<a class="btn btn-mini" ><i class="icon-refresh"></i> Update data</a>
                         	</div>
                         </div>
                         <div class="span11"> </div>
-	                    <div class="span8">
+	                    <div class="span4">
                             <table class="table">
                             	<thead>
 		                            <tr>  
-					                    <th>学号</th>  
-					                    <th>卡号</th>
-					                    <th>姓名</th>
-					                    <th>密码</th>
-					                    <th>方向id</th>
-					                    <th>年级id</th>
-					                    <th>电话</th>
-					                    <th>邮箱</th>
-					                    <th>qq</th>
+					                    <th>结点编号</th>  
+					                    <th>时间</th>
+					                    <th>温度</th>
 					                </tr>  
 				                </thead>
 				                <tbody id="info">
@@ -362,5 +274,6 @@
 		<script src="js/unicorn.js"></script>
 		<script src="js/unicorn.dashboard.js"></script>
 		<script src="js/raphael.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-datepicker.js" ></script>
 	</body>
 </html>

@@ -41,7 +41,7 @@
                     <ul>
                         <li><a href="admin/studentsInfo.action">用户信息查询</a></li>
                         <li><a href="admin/studentsRegister.action">用户信息录入</a></li>
-                        <li><a href="form-wizard.html">用户信息修改</a></li>
+                        <li><a href="admin/studentsUpdate.action">用户信息修改</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -53,11 +53,19 @@
                         <li><a href="gallery.html">设备信息统计</a></li>
                     </ul>
                 </li>
+                <li class="submenu">
+                    <a href="#"><i class="icon icon-file"></i> <span>温湿度管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="admin/temperatureInfo.action">温度管理</a></li>
+                        <li><a href="chat.html">湿度管理</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="charts.html"><i class="icon icon-signal"></i> <span>门锁管理</span></a>
                 </li>
                 <li>
                     <a href="widgets.html"><i class="icon icon-inbox"></i> <span>签到管理</span></a>
                 </li>
+                
             </ul>
         </div>
