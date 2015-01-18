@@ -418,4 +418,59 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao{
 		return result;
 	}
 
+	@Override
+	public boolean delStudent(String stdnum) {
+		boolean result = false;
+		String sql = "delete from student where stdnum = ?";
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setString(1, stdnum);
+			int rs = this.pstmt.executeUpdate();
+			System.out.println(rs);
+			if(rs > 0) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				this.pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	@Override
+	public boolean updateStudent(Student student) {
+		boolean result = false;
+		String sql = "update student set cardID =?, name=?, password=?, major_id=?, grade_id=?, phone=?, email=?, qq=?, is_here=? where stdnum = ?";
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setString(1, student.getCardID());
+			this.pstmt.setString(2, student.getName());
+			this.pstmt.setString(3, student.getPassword());
+			this.pstmt.setInt(4, student.getMajor_id());
+			this.pstmt.setInt(5, student.getGrade_id());
+			this.pstmt.setString(6, student.getPhone());
+			this.pstmt.setString(7, student.getEmail());
+			this.pstmt.setString(8, student.getQQ());
+			this.pstmt.setBoolean(9, student.getIs_here());
+			this.pstmt.setString(10, student.getStdnum());
+			int rs = this.pstmt.executeUpdate();
+			System.out.println(rs);
+			if(rs > 0) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				this.pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }

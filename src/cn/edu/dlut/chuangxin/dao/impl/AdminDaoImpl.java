@@ -45,6 +45,7 @@ public class AdminDaoImpl extends BaseDaoImpl implements AdminDao{
 	@Override
 	public String getPasswordFromName(String name) {
 		// TODO Auto-generated method stub
+		System.out.println(name + "---getPasswordFromName");
 		String result = null;
 		String sql = "select password from admin where name = ?";
 		try {

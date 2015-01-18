@@ -13,4 +13,7 @@ public interface StudentDao extends BaseDao<Student>{
 	Student getStudentInfoFromStdnum(String stdnum);
 	int getStudentsSize();
 	int getStudentsSize(Student student);
+	
+	boolean delStudent(String stdnum);
+	boolean updateStudent(Student std);
 }

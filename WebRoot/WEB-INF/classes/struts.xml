@@ -9,104 +9,69 @@
     <constant name="struts.devMode" value="true" />
     <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
     <constant name="struts.ui.theme" value="simple" />
-	<package name="user" namespace="/" extends="struts-default">
-        <action name="login" class="cn.edu.dlut.chuangxin.action.LoginAction" method="execute">
+    
+	<package name="admin" namespace="/admin" extends="struts-default">
+        <action name="login" class="cn.edu.dlut.chuangxin.action.AdminAction" method="login">
             <result name="login">/login.jsp</result>
             <result name="main">/main.jsp</result>
         </action>
-        <action name="logout" class="cn.edu.dlut.chuangxin.action.LogoutAction" method="execute">
+        <action name="logout" class="cn.edu.dlut.chuangxin.action.AdminAction" method="logout">
             <result name="login" type="redirectAction">
             	<param name="namespace">/</param>
 				<param name="actionName">login</param>
 			</result>
         </action>
-        <action name="index" class="cn.edu.dlut.chuangxin.action.IndexAction" method="execute">
-            <result name="index">/index.jsp</result>
-        </action>
-    </package>
-    
-    <package name="user_ajax" namespace="/" extends="json-default">
-    	<action name="checkAdminPasswordAction" class="cn.edu.dlut.chuangxin.action.CheckAdminPasswordAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getStudentsInfoAction" class="cn.edu.dlut.chuangxin.action.GetStudentsInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getMajorsInfoAction" class="cn.edu.dlut.chuangxin.action.GetMajorsInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getGradesInfoAction" class="cn.edu.dlut.chuangxin.action.GetGradesInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="checkStudentRegisterInfoAction" class="cn.edu.dlut.chuangxin.action.CheckStudentRegisterInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getStudentInfoFromStdnumAction" class="cn.edu.dlut.chuangxin.action.GetStudentInfoFromStdnumAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getTemperatureInfoAction" class="cn.edu.dlut.chuangxin.action.GetTemperatureInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-  	</package>
-  	
-  	<package name="admin_ajax" namespace="/admin" extends="json-default">
-    	<action name="getStudentsInfoAction" class="cn.edu.dlut.chuangxin.action.GetStudentsInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getMajorsInfoAction" class="cn.edu.dlut.chuangxin.action.GetMajorsInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getGradesInfoAction" class="cn.edu.dlut.chuangxin.action.GetGradesInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="checkStudentRegisterInfoAction" class="cn.edu.dlut.chuangxin.action.CheckStudentRegisterInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getStudentInfoFromStdnumAction" class="cn.edu.dlut.chuangxin.action.GetStudentInfoFromStdnumAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-    	<action name="getTemperatureInfoAction" class="cn.edu.dlut.chuangxin.action.GetTemperatureInfoAction">
-    		<!-- 将返回类型设置为json -->
-    		<result type="json"></result>
-    	</action>
-  	</package>
-    
-    <package name="admin" namespace="/admin" extends="struts-default">
-        <action name="main" class="cn.edu.dlut.chuangxin.action.MainAction" method="execute">
+    	<action name="admin" class="cn.edu.dlut.chuangxin.action.AdminAction" method="admin">
             <result name="main">/main.jsp</result>
             <result name="login" type="redirectAction">
 				<param name="namespace">/</param>
 				<param name="actionName">login</param>
 			</result>
         </action>
-        <action name="studentsInfo" class="cn.edu.dlut.chuangxin.action.StudentsInfoAction" method="execute">
-            <result name="students_info">/students_info.jsp</result>
-        </action>
-        <action name="studentsUpdate" class="cn.edu.dlut.chuangxin.action.StudentsUpdateAction" method="execute">
-            <result name="students_update">/students_update.jsp</result>
-        </action>
-        <action name="studentsRegister" class="cn.edu.dlut.chuangxin.action.StudentsRegisterAction" method="execute">
-            <result name="students_register">/students_register.jsp</result>
-        </action>
-        <action name="registerSuccess" class="cn.edu.dlut.chuangxin.action.RegisterSuccessAction" method="execute">
-            <result name="register_success">/register_success.jsp</result>
-        </action>
-        <action name="temperatureInfo" class="cn.edu.dlut.chuangxin.action.TemperatureInfoAction" method="execute">
-            <result name="temperature_info">/temperature_info.jsp</result>
-        </action>
-        
     </package>
+    
+   	<package name="admin_json" namespace="/admin_json" extends="json-default">    
+        <action name="checkAdminPasswordAction" class="cn.edu.dlut.chuangxin.action.AdminAction" method="checkPassword">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    </package>
+    
+    <package name="user" namespace="/user" extends="struts-default">  
+        <action name="user_*" class="cn.edu.dlut.chuangxin.action.UserAction" method="{1}">
+            <result name="students_info">/students_info.jsp</result>
+            <result name="students_update">/students_update.jsp</result>
+            <result name="students_register">/students_register.jsp</result>
+            <result name="register_success">/register_success.jsp</result>
+        </action>      
+    </package>
+    <package name="user_json" namespace="/user_json" extends="json-default">
+    	<action name="user_json_*" class="cn.edu.dlut.chuangxin.action.UserInfoAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    	<action name="getMajorsInfoAction" class="cn.edu.dlut.chuangxin.action.MajorAction">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    	<action name="getGradesInfoAction" class="cn.edu.dlut.chuangxin.action.GradeAction">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+  	</package>
 
+	<package name="sensor" namespace="/sensor" extends="struts-default">
+        <action name="temperatureInfo" class="cn.edu.dlut.chuangxin.action.TemperatureAction" method="temperatureInfo">
+            <result name="temperature_info">/temperature_info.jsp</result>
+        </action>      
+        <action name="humidityInfo" class="cn.edu.dlut.chuangxin.action.HumidityAction" method="humidityInfo">
+            <result name="temperature_info">/temperature_info.jsp</result>
+        </action>    
+    </package>
+    <package name="sensor_json" namespace="/sensor_json" extends="json-default">
+        <action name="getTemperatureInfoAction" class="cn.edu.dlut.chuangxin.action.TemperatureAction" method="getTemperatureInfoAction">
+    		<!-- 将返回类型设置为json -->
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>     
+    	<action name="getHumidityInfoAction" class="cn.edu.dlut.chuangxin.action.HumidityAction" method="getHumidityInfoAction">
+    		<!-- 将返回类型设置为json -->
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action> 
+    </package>
 </struts>

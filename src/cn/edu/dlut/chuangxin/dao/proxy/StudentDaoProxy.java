@@ -90,5 +90,20 @@ public class StudentDaoProxy extends BaseDaoProxy implements StudentDao{
 		connPool.returnConnection(conn);
 		return result;
 	}
-
+	
+	@Override 
+	public boolean delStudent(String stdnum) {
+		boolean result = false;
+		result = ((StudentDao) super.dao).delStudent(stdnum);
+		connPool.returnConnection(conn);
+		return result;
+	}
+	
+	@Override
+	public boolean updateStudent(Student student) {
+		boolean result = false;
+		result = ((StudentDao) super.dao).updateStudent(student);
+		connPool.returnConnection(conn);
+		return result;
+	}
 }
