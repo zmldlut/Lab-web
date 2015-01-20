@@ -2,11 +2,10 @@ package cn.edu.dlut.chuangxin.action;
 
 import java.util.HashMap;
 
-import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
-import cn.edu.dlut.chuangxin.dao.proxy.AdminDaoProxy;
-import cn.edu.dlut.chuangxin.model.Admin;
-
 import com.opensymphony.xwork2.ActionContext;
+import com.zml.dao.factory.DaoFactory;
+import com.zml.dao.proxy.AdminDaoProxy;
+import com.zml.model.Admin;
 
 public class AdminAction extends BaseAction{
 

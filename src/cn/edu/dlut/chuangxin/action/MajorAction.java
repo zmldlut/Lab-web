@@ -3,9 +3,9 @@ package cn.edu.dlut.chuangxin.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
-import cn.edu.dlut.chuangxin.dao.proxy.MajorDaoProxy;
-import cn.edu.dlut.chuangxin.model.Major;
+import com.zml.dao.factory.DaoFactory;
+import com.zml.dao.proxy.MajorDaoProxy;
+import com.zml.model.Major;
 
 public class MajorAction extends BaseAction{
 

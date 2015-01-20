@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
-import cn.edu.dlut.chuangxin.dao.proxy.GradeDaoProxy;
-import cn.edu.dlut.chuangxin.dao.proxy.MajorDaoProxy;
-import cn.edu.dlut.chuangxin.dao.proxy.StudentDaoProxy;
-import cn.edu.dlut.chuangxin.model.Student;
+import com.zml.dao.factory.DaoFactory;
+import com.zml.dao.proxy.GradeDaoProxy;
+import com.zml.dao.proxy.MajorDaoProxy;
+import com.zml.dao.proxy.StudentDaoProxy;
+import com.zml.model.Student;
 
 public class UserInfoAction extends BaseAction{
 

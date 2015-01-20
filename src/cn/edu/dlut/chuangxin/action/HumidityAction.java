@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
-import cn.edu.dlut.chuangxin.dao.proxy.HumidityDaoProxy;
-import cn.edu.dlut.chuangxin.model.Humidity;
+import com.zml.dao.factory.DaoFactory;
+import com.zml.dao.proxy.HumidityDaoProxy;
+import com.zml.model.Humidity;
 
 public class HumidityAction extends BaseAction {
 

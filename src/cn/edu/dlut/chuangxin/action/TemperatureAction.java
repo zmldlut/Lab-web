@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
-import cn.edu.dlut.chuangxin.dao.proxy.TemperatureDaoProxy;
-import cn.edu.dlut.chuangxin.model.Temperature;
+import com.zml.dao.factory.DaoFactory;
+import com.zml.dao.proxy.TemperatureDaoProxy;
+import com.zml.model.Temperature;
 
 public class TemperatureAction extends BaseAction {
 

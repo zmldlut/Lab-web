@@ -3,9 +3,9 @@ package cn.edu.dlut.chuangxin.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cn.edu.dlut.chuangxin.dao.factory.DaoFactory;
-import cn.edu.dlut.chuangxin.dao.proxy.NodeTypeDaoProxy;
-import cn.edu.dlut.chuangxin.model.NodeType;
+import com.zml.dao.factory.DaoFactory;
+import com.zml.dao.proxy.NodeTypeDaoProxy;
+import com.zml.model.NodeType;
 
 public class NodeTypeAction extends BaseAction {
 	

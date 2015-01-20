@@ -2,9 +2,8 @@ package cn.edu.dlut.chuangxin.action;
 
 import java.util.Map;
 
-import cn.edu.dlut.chuangxin.dao.proxy.BaseDaoProxy;
-
 import com.opensymphony.xwork2.ActionSupport;
+import com.zml.dao.proxy.BaseDaoProxy;
 
 public abstract class BaseAction extends ActionSupport{
 
