@@ -166,7 +166,6 @@
 			if(checkPassword(document.getElementById("password").value) == false){
 				result = false;
 			}
-			alert(result);
 			if(result){
 				sendStudentInfo();
 			}
@@ -194,12 +193,12 @@
         	var val = obj.options[index].value;
         	return parseInt(val);
         }
-		
+        
 		function setMajor(){
 			var params = {};
 			$.ajax({
 				type : "post",
-				url : "admin/getMajorsInfoAction.action",
+				url : "user_json/getMajorsInfoAction.action",
 				data : params,
 				dataType : "text",
 				success : function(json){
@@ -220,7 +219,7 @@
 			var params = {};
 			$.ajax({
 				type : "post",
-				url : "admin/getGradesInfoAction.action",
+				url : "user_json/getGradesInfoAction.action",
 				data : params,
 				dataType : "text",
 				success : function(json){
@@ -249,17 +248,15 @@
 				"studentInfo.email" : document.getElementById("email").value,
 				"studentInfo.QQ" : document.getElementById("qq").value
 			};
-			alert(params);
 			$.ajax({
 				type : "post",
-				url : "admin/checkStudentRegisterInfoAction.action",
+				url : "user_json/user_json_checkStudentRegisterInfoAction.action",
 				data : params,
 				dataType : "text",
 				success : function(json){
 					var obj = $.parseJSON(json);
-					alert(obj.result);
-					if(obj.result == "OK"){
-						
+					if(obj.result == "true"){
+						window.location.href="user/user_success";
 					}
 				},
 				error : function(json){
@@ -267,7 +264,6 @@
 				}
 			});
 		}
-		
 		window.onload = function () {
 			setMajor();
 			setGrade();

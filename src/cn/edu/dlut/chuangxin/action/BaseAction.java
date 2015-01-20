@@ -8,6 +8,10 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public abstract class BaseAction extends ActionSupport{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected Map<String, Object> resultMsg;
 	protected BaseDaoProxy daoProxy;
 	

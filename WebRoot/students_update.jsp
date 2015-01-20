@@ -186,7 +186,7 @@
 			var params = {};
 			$.ajax({
 				type : "post",
-				url : "admin/getMajorsInfoAction.action",
+				url : "user_json/getMajorsInfoAction.action",
 				data : params,
 				dataType : "text",
 				success : function(json){
@@ -211,7 +211,7 @@
 			var params = {};
 			$.ajax({
 				type : "post",
-				url : "admin/getGradesInfoAction.action",
+				url : "user_json/getGradesInfoAction.action",
 				data : params,
 				dataType : "text",
 				success : function(json){
@@ -244,17 +244,15 @@
 				"studentInfo.email" : document.getElementById("email").value,
 				"studentInfo.QQ" : document.getElementById("qq").value
 			};
-			alert(params);
 			$.ajax({
 				type : "post",
-				url : "admin/checkStudentRegisterInfoAction.action",
+				url : "user_json/user_json_updateStudent.action",
 				data : params,
 				dataType : "text",
 				success : function(json){
 					var obj = $.parseJSON(json);
-					alert(obj.result);
-					if(obj.result == "OK"){
-						
+					if(obj.result == "true"){
+						alert("更新成功");
 					}
 				},
 				error : function(json){
@@ -265,11 +263,11 @@
 		
 		function setStudentInfo(stdnum){
 			var params = {
-					"stdnum" : stdnum
+					"studentInfo.stdnum" : stdnum
 				};
 				$.ajax({
 					type : "post",
-					url : "admin/getStudentInfoFromStdnumAction.action",
+					url : "user_json/user_json_getStudentInfoFromStdnumAction.action",
 					data : params,
 					dataType : "text",
 					success : function(json){

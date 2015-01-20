@@ -53,9 +53,9 @@ public class AdminAction extends BaseAction{
 			System.out.println("用户不存在");
 		}
 		else if(this.getAdmin().getPassword().equals(result)){
-			resultMsg.put("result", "密码正确");
-			System.out.println("密码正确");
 			ActionContext.getContext().getSession().put("identity", "admin");
+			resultMsg.put("result", "密码正确");
+			System.out.println("密码正确 " + ActionContext.getContext().getSession().get("identity"));
 		}
 		else {
 			System.out.println("密码错误");

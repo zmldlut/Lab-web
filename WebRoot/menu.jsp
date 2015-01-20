@@ -37,11 +37,17 @@
             <ul>
                 <li class="active"><a href="admin/main.action"><i class="icon icon-home"></i> <span>首页</span></a></li>
                 <li class="submenu">
-                    <a href="#"><i class="icon icon-th-list"></i> <span>用户信息管理</span> <span class="label">3</span></a>
+                    <a href="#"><i class="icon icon-th-list"></i> <span>用户信息管理</span> <span class="label">2</span></a>
                     <ul>
-                        <li><a href="admin/studentsInfo.action">用户信息查询</a></li>
-                        <li><a href="admin/studentsRegister.action">用户信息录入</a></li>
-                        <li><a href="admin/studentsUpdate.action">用户信息修改</a></li>
+                        <li><a href="user/user_info.action">用户信息查询</a></li>
+                        <li><a href="user/user_register.action">用户信息录入</a></li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="#"><i class="icon icon-th-list"></i> <span>结点管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="node/node_info.action">结点信息查询</a></li>
+                        <li><a href="node/node_register.action">增加结点</a></li>
                     </ul>
                 </li>
                 <li class="submenu">

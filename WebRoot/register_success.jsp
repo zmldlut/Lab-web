@@ -23,7 +23,7 @@
     <script language="javascript" type="text/javascript">
 	
     	function forward(){
-    		window.location.href="admin/main.action";
+    		window.location.href="user/user_register.action";
     	}
     	var Time = 0;
     	var one = 1;

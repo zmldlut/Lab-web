@@ -52,7 +52,7 @@ public class UserInfoAction extends BaseAction{
 	}
 	
 	public String getStudentsInfoAction(){
-//		System.out.println(studentInfo.toString());
+		//System.out.println(studentInfo.toString());
 		ArrayList<Student> dataList = null;
 		resultMsg = new HashMap<String, Object>();
 		try {
@@ -94,8 +94,9 @@ public class UserInfoAction extends BaseAction{
 	}
 	
 	boolean checkName(String name){
+		System.out.println(name);
 		if(name == null) return false;
-		return matchPattern("^[\\u4e00-\\u9fa5]{1,10}$", name);
+		return matchPattern("^[\\u4e00-\\u9fa5|a-z]{1,10}$", name);
 	}
 	
 	boolean checkMajor(int major_id) throws Exception{
@@ -131,7 +132,6 @@ public class UserInfoAction extends BaseAction{
 	}
 	
 	boolean checkStudentInfo(Student studentInfo) throws Exception{
-		resultMsg = new HashMap<String, Object>();
 		if(checkStdnum(studentInfo.getStdnum()) == false){
 			resultMsg.put("result","学号已经注册");
 			return false;
@@ -174,7 +174,7 @@ public class UserInfoAction extends BaseAction{
 	public String checkStudentRegisterInfoAction(){
 		System.out.println("尝试插入数据：：" + studentInfo.toString());
 		resultMsg = new HashMap<String, Object>();
-		resultMsg.put("result","OK");
+		resultMsg.put("result","true");
 		try {
 			if(checkStudentInfo(getStudentInfo())){
 				if(((StudentDaoProxy)daoProxy).doCreate(getStudentInfo()) == false){
@@ -206,6 +206,7 @@ public class UserInfoAction extends BaseAction{
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public String delStudent() {
+		System.out.println(studentInfo.getStdnum());
 		boolean result = false;
 		resultMsg = new HashMap<String, Object>();
 		if(studentInfo.getStdnum() == null) {
@@ -235,5 +236,4 @@ public class UserInfoAction extends BaseAction{
 		return SUCCESS;
 	}
 	
-//	public String update
 }

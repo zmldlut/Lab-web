@@ -21,22 +21,13 @@
         		width:80px; background:none; border:none;
 				display:block; overflow:hidden;
 				border:#61AC36 1px solid; border-right:none; background:url(arrow.gif) #fff no-repeat 62px 1px; display:block;
-		    }  
+		    }
         </style>
         <script language="javascript" type="text/javascript">
+        	var type = -1;
         	var page = 1;
-        	var maxPage = 1;
-        	var stdnum = "";
-        	var cardID = "";
-        	var name = "";
-        	var major_id = 0;
-        	var grade_id = 0;
-        	var phone = "";
-        	var email = "";
-        	var qq = "";
-        	var checkNum = 0;
         	
-        	var arr=["stdnum", "cardID", "name", "password"];
+        	var arr=["id", "name", "location"];
         	function addTR(cols){
         		var table = document.getElementById("info");
         		var tr = table.insertRow();
@@ -84,9 +75,9 @@
         			}
         			else{
 	        			td.setAttribute("text-align", "center");
-	        			td.value = cols["stdnum"];
+	        			td.value = cols["id"];
 	        			td.onclick = function (){
-	        				window.location.href="user/user_update.action?stdnum=" + this.value;
+	        				window.location.href="node/node_update.action?node.id=" + this.value;
 	        			}
 	        			if(window.navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
 	        				td.textContent = cols[arr[i-1]];
@@ -178,100 +169,11 @@
             	setInfo();
             }
             
-            function setMajor(){
-    			var params = {};
-    			$.ajax({
-    				type : "post",
-    				url : "user_json/getMajorsInfoAction.action",
-    				data : params,
-    				dataType : "text",
-    				success : function(json){
-    					var obj = $.parseJSON(json);
-    					removeAllSOP("searchChoice");
-    					addSOP("searchChoice", "== 请选择专业 ==", 0);
-    					for(var i = 0; i < obj.result.length; i++){
-    						addSOP("searchChoice", obj.result[i].major_name, obj.result[i].id);
-    					}
-    					selectSOP("searchChoice", 0);
-    				},
-    				error : function(json){
-    					alert("error " + json);
-    				}
-    			});
-    		}
-    		
-    		function setGrade(){
-    			var params = {};
-    			$.ajax({
-    				type : "post",
-    				url : "user_json/getGradesInfoAction.action",
-    				data : params,
-    				dataType : "text",
-    				success : function(json){
-    					var obj = $.parseJSON(json);
-    					removeAllSOP("searchChoice");
-    					addSOP("searchChoice", "== 请选择年级 ==", 0);
-    					for(var i = 0; i < obj.result.length; i++){
-    						addSOP("searchChoice", obj.result[i].grade_name, obj.result[i].id);
-    					}
-    					selectSOP("searchChoice", 0);
-    				},
-    				error : function(json){
-    					alert("error " + json);
-    				}
-    			});
-    		}
-            
-            function searchMethod(){
-            	var obj=document.getElementById("searchMethod");
+            function nodeTypeSearch(){
+            	var obj=document.getElementById("nodeTypeSearch");
             	var index = obj.selectedIndex;
             	var val = obj.options[index].value;
-            	if(parseInt(val) == 0){
-            		removeAllSOP("searchChoice");
-            		stdnum = "";
-                 	cardID = "";
-                 	name = "";
-                 	major_id = 0;
-                 	grade_id = 0;
-                 	phone = "";
-                 	email = "";
-                 	qq = "";
-                 	setInfo();
-            	}
-            	else if(parseInt(val) == 1){
-            		setMajor();
-            	}
-            	else if(parseInt(val) == 2){
-            		setGrade();
-            	}
-            }
-            
-            function searchChoice(){
-            	var obj=document.getElementById("searchMethod");
-            	var index = obj.selectedIndex;
-            	var valA = obj.options[index].value;
-            	
-            	obj=document.getElementById("searchChoice");
-            	index = obj.selectedIndex;
-            	var valB = obj.options[index].value;
-            	
-            	
-            	stdnum = "";
-            	cardID = "";
-            	name = "";
-            	major_id = 0;
-            	grade_id = 0;
-            	phone = "";
-            	email = "";
-            	qq = "";
-            	
-            	if(parseInt(valA) == 1){
-            		major_id = parseInt(valB);
-            	}
-            	else if(parseInt(valA) == 2){
-            		grade_id = parseInt(valB);
-            	}
-            	
+            	type = val;
             	setInfo();
             }
         	
@@ -280,18 +182,11 @@
         		var params = {
     				"page" : page,
     				"pageCount" : 20,
-    				"studentInfo.stdnum" : stdnum,
-    				"studentInfo.cardID" : cardID,
-    				"studentInfo.name" : name,
-    				"studentInfo.major_id" : major_id,
-    				"studentInfo.grade_id" : grade_id,
-    				"studentInfo.phone" : phone,
-    				"studentInfo.email" : email,
-    				"studentInfo.QQ" : qq
+    				"type" : type
     			};
    				$.ajax({
    					type : "post",
-   					url : "user_json/user_json_getStudentsInfoAction.action",
+   					url : "node_json/node_json_getNodes.action",
    					data : params,
    					dataType : "text",
    					success : function(json){
@@ -324,7 +219,30 @@
    				});
         	}
         	
+        	function setNodeType(){
+        		var params = {};
+   				$.ajax({
+   					type : "post",
+   					url : "node_json/node_type_json_getNodeTypes.action",
+   					data : params,
+   					dataType : "text",
+   					success : function(json){
+   						var obj = $.parseJSON(json);
+    					removeAllSOP("nodeTypeSearch");
+    					addSOP("nodeTypeSearch", "所有类型", -1);
+    					for(var i = 0; i < obj.result.length; i++){
+    						addSOP("nodeTypeSearch", obj.result[i].type, obj.result[i].id);
+    					}
+    					selectSOP("nodeTypeSearch", -1);
+   					},
+   					error : function(json){
+   						alert("error " + json);
+   					}
+   				});
+        	}
+        	
         	window.onload = function () {
+        		setNodeType();
         		setInfo();
 			}
 		</script>
@@ -333,7 +251,7 @@
     <jsp:include page="menu.jsp" />
     <div id="content" style="min-height: 1000px">
             <div id="content-header">
-                <h1>学生信息</h1>
+                <h1>结点信息</h1>
                 <div class="btn-group">
                     <a class="btn btn-large tip-bottom" title="Manage Files">
                     	<i class="icon-file"></i>
@@ -363,12 +281,7 @@
                         <div class="widget-title">
                         	<span class="icon"><i class="icon-signal"></i></span>
                         	<h5>Site Statistics</h5>
-                        	<select id="searchMethod" class="form-control" style="width: 7%;height: 80%;margin-top: 0.25%;" class="select" onchange="searchMethod()">
-                        		<option value="0" selected="selected">全部学生</option>
-                        		<option value="1" >按分组</option>
-                        		<option value="2" >按年级</option>
-                        	</select>
-                        	<select id="searchChoice" class="form-control" style="width: 12%;height: 80%;margin-top: 0.25%;" class="select" onchange="searchChoice()">
+                        	<select id="nodeTypeSearch" class="form-control" style="width: 12%;height: 80%;margin-top: 0.25%;" class="select" onchange="nodeTypeSearch()">
                         	</select>
                         	<div class="buttons">
                         		<a href="#" class="btn btn-mini"><i class="icon-refresh"></i> Update data</a>
@@ -380,10 +293,9 @@
                             	<thead>
 		                            <tr>
 		                            	<th></th>
-					                    <th>学号</th>  
-					                    <th>卡号</th>
-					                    <th>姓名</th>
-					                    <th>密码</th>
+					                    <th>ID</th>  
+					                    <th>结点名称</th>
+					                    <th>位置</th>
 					                </tr>  
 				                </thead>
 				                <tbody id="info">

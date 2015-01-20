@@ -228,10 +228,9 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao{
 			sql += "qq = ?";
 		}
 		sql += " ORDER BY stdnum asc LIMIT ?,?";
-				
-		cnt = 0;
 		
 		try {
+			cnt = 0;
 			this.pstmt = this.conn.prepareStatement(sql);
 			if(!student.getStdnum().equals("")){
 				this.pstmt.setString(++cnt, student.getStdnum());
@@ -257,6 +256,7 @@ public class StudentDaoImpl extends BaseDaoImpl implements StudentDao{
 			if(!student.getQQ().equals("")){
 				this.pstmt.setString(++cnt, student.getQQ());
 			}
+			System.out.println(sql + " " + (page * pageCount - pageCount + 1) + " " + pageCount + " " + cnt);
 			this.pstmt.setInt(++cnt, page * pageCount - pageCount);
 			this.pstmt.setInt(++cnt, pageCount);
 			ResultSet rs = this.pstmt.executeQuery();

@@ -30,7 +30,7 @@
         </action>
     </package>
     
-   	<package name="admin_json" namespace="/admin_json" extends="json-default">    
+   	<package name="admin_json" namespace="/admin_json" extends="json-default">
         <action name="checkAdminPasswordAction" class="cn.edu.dlut.chuangxin.action.AdminAction" method="checkPassword">
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>
@@ -52,6 +52,23 @@
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>
     	<action name="getGradesInfoAction" class="cn.edu.dlut.chuangxin.action.GradeAction">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+  	</package>
+  	
+  	<package name="node" namespace="/node" extends="struts-default">  
+        <action name="node_*" class="cn.edu.dlut.chuangxin.action.NodeAction" method="{1}">
+            <result name="nodes_info">/nodes_info.jsp</result>
+            <result name="nodes_update">/nodes_update.jsp</result>
+            <result name="nodes_register">/nodes_register.jsp</result>
+            <result name="register_success">/register_success.jsp</result>
+        </action>      
+    </package>
+	<package name="node_json" namespace="/node_json" extends="json-default">
+    	<action name="node_json_*" class="cn.edu.dlut.chuangxin.action.NodeAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    	<action name="node_type_json_*" class="cn.edu.dlut.chuangxin.action.NodeTypeAction" method="{1}">
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>
   	</package>

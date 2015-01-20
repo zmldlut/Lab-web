@@ -15,6 +15,7 @@ public class ConnectionPool {
 
 	private static String DRIVER="com.mysql.jdbc.Driver";
 	private static String URL = "jdbc:mysql://192.168.9.69:3306/lab";
+	//private static String URL = "jdbc:mysql://127.0.0.1:3306/lab";
 	private static String USERNAME = "root";
 	private static String PASSWORD = "";
 	

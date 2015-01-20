@@ -26,15 +26,15 @@
 							"admin.password" : document.getElementsByName("password")[0].value
 					};
 					$.ajax({
-						type : "get",
-						url : "checkAdminPasswordAction.action",
+						type : "post",
+						url : "admin_json/checkAdminPasswordAction.action",
 						data : params,
 						dataType : "text",
 						success : function(json){
 							var obj = $.parseJSON(json);
 							if(obj.result == "密码正确"){
 								document.getElementById("errorMSG").innerHTML=obj.result;
-								window.location.href="admin/main.action";
+								window.location.href="admin/admin.action";
 							}
 							else{
 								document.getElementById("errorMSG").innerHTML=obj.result;
