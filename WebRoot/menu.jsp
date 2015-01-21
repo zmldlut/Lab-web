@@ -35,7 +35,7 @@
 
         <div id="sidebar">
             <ul>
-                <li class="active"><a href="admin/main.action"><i class="icon icon-home"></i> <span>首页</span></a></li>
+                <li class="active"><a href="admin/admin.action"><i class="icon icon-home"></i> <span>首页</span></a></li>
                 <li class="submenu">
                     <a href="#"><i class="icon icon-th-list"></i> <span>用户信息管理</span> <span class="label">2</span></a>
                     <ul>
@@ -51,19 +51,19 @@
                     </ul>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="icon icon-file"></i> <span>设备管理</span> <span class="label">4</span></a>
+                    <a href="#"><i class="icon icon-file"></i> <span>设备管理</span> <span class="label">2</span></a>
                     <ul>
-                        <li><a href="invoice.html">设备信息查询</a></li>
-                        <li><a href="chat.html">设备信息录入</a></li>
-                        <li><a href="calendar.html">设备信息修改</a></li>
-                        <li><a href="gallery.html">设备信息统计</a></li>
+                        <li><a href="device/device_info.action">设备信息查询</a></li>
+                        <li><a href="device/device_register.action">设备信息录入</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="icon icon-file"></i> <span>温湿度管理</span> <span class="label">2</span></a>
+                    <a href="#"><i class="icon icon-file"></i> <span>环境管理</span> <span class="label">4</span></a>
                     <ul>
-                        <li><a href="admin/temperatureInfo.action">温度管理</a></li>
-                        <li><a href="chat.html">湿度管理</a></li>
+                        <li><a href="sensor/temperatureInfo.action">温度管理</a></li>
+                        <li><a href="sensor/humidityInfo.action">湿度管理</a></li>
+                        <li><a href="sensor/pmInfo.action">PM值管理</a></li>
+                        <li><a href="sensor/lightInfo.action">光强管理</a></li>
                     </ul>
                 </li>
                 <li>

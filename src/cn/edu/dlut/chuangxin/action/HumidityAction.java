@@ -62,22 +62,10 @@ public class HumidityAction extends BaseAction {
 		ArrayList<Humidity> dataList = null;
 		resultMsg = new HashMap<String, Object>();
 		try {
-			if(start == null || end == null){
-				dataList = ( (HumidityDaoProxy) daoProxy).getHumidity(page, pageCount);
-			}
-			else{
-				SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-				dataList = ( (HumidityDaoProxy) daoProxy).getHumidity(date.parse(start), date.parse(end), page, pageCount);
-			}
-			
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+			dataList = ( (HumidityDaoProxy) daoProxy).getHumidity(date.parse(start), date.parse(end), node_id, page, pageCount);
 			int sz = 0;
-			if(start == null || end == null){
-				sz = ( (HumidityDaoProxy) daoProxy).getHumiditySize() + pageCount - 1;
-			}
-			else{
-				SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-				sz = ( (HumidityDaoProxy) daoProxy).getHumiditySize(date.parse(start), date.parse(end)) + pageCount - 1;
-			}
+			sz = ( (HumidityDaoProxy) daoProxy).getHumiditySize(date.parse(start), date.parse(end), node_id) + pageCount - 1;
 			resultMsg.put("maxPage", sz / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

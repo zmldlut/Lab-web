@@ -117,7 +117,6 @@
 		}
 		
 		function setNodeInfo(id){
-			alert(id);
 			var params = {
 					"node.id" : id
 				};

@@ -61,7 +61,6 @@
         				newInput.name = "delete";
         				newInput.value = cols["stdnum"];
         				newInput.onchange = function (){
-        					updateStdnum = this.value;
         					if(this.checked){
         						checkNum ++;
         					}

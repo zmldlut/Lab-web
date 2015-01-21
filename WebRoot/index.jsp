@@ -9,116 +9,213 @@
         + path;
 %>
 <base href="<%=basePath%>">
-<!DOCTYPE HTML>
-<html>
+<!-- saved from url=(0021)https://worktile.com/ -->
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>日期选择器：jquery datepicker的使用</title>
-<meta name="keywords" content="datepicker, jquery插件" />
-<meta name="description" content="Helloweba演示平台，演示XHTML、CSS、jquery、PHP案例和示例" />
-<link rel="stylesheet" type="text/css" href="../css/main.css" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
-<style type="text/css">
-a{color:#007bc4/*#424242*/; text-decoration:none;}
-a:hover{text-decoration:underline}
-ol,ul{list-style:none}
-table{border-collapse:collapse;border-spacing:0}
-body{height:100%; font:12px/18px Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif; color:#51555C;}
-img{border:none}
-.demo{width:500px; margin:20px auto}
-.demo h4{height:32px; line-height:32px; font-size:14px}
-.demo h4 span{font-weight:500; font-size:12px}
-.demo p{line-height:28px;}
-input{width:108px; height:20px; line-height:20px; padding:2px; border:1px solid #d3d3d3}
-</style>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-datepicker.js"></script>
-<script type="text/javascript">
-$(function(){
-	$("#date_1").datepicker();
-	$("#date_2").datepicker({
-		//navigationAsDateFormat: true,
-		dateFormat: 'yy年mm月dd日'
-	});
-	$("#date_3").datepicker({
-		minDate: -30,
-		maxDate: 0
-	});
-	$("#date_4").datepicker({
-		altField: "#alternate",
-		altFormat: "yy年MMd日,DD"
-	});
-	$("#datepicker").datepicker({
-		showOtherMonths: true,
-		selectOtherMonths: false
-	});
-	$("#date_6").datepicker({
-		showWeek: true
-	});
-	$("#date_7").datepicker({
-		numberOfMonths: 3,
-		showButtonPanel: true
-	});
-	$("#date_8").datepicker({
-		showOn: "button",
-		buttonImage: "img/calendar.gif",
-		buttonImageOnly: true
-	});
-	$("#date_9").datepicker({
-		onSelect: function(dateText,inst){
-			alert("您选择的日期是："+dateText);
-			alert(inst.value);
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>智能实验室后台管理系统</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/unicorn.main.css" />
+    <link rel="stylesheet" href="css/bootstrap-v2-2-1.min.css">
+    <link rel="stylesheet" href="css/unicorn.grey.css" class="skin-color" />
+    <script language="javascript" type="text/javascript">
+    
+    	function checkType(){
+    		if(choice("type") == "null"){
+				var obj = document.getElementById("inputType");
+				obj.setAttribute("class", "form-group has-error");
+				return false;
+			}
+			var obj = document.getElementById("inputType");
+			obj.setAttribute("class", "form-group has-success");
+			return true;
+    	}
+    
+		function checkForm(){
+			var result = true;
+			if(checkType() == false){
+				result = false;
+			}
+			if(result){
+				sendDeviceInfo();
+			}
+			return result;
 		}
-	});
-});
-</script>
+		
+		function addSOP(id, text, value){
+    		var obj = document.getElementById(id);
+    		obj.options.add(new Option(text, value));
+    	}
+    	
+        function removeAllSOP(id){
+            var obj=document.getElementById(id);
+            obj.options.length=0;
+        }
+        
+        function selectSOP(id, index){
+        	 var obj=document.getElementById(id);
+        	 obj.value = index;
+        }
+        
+        function choice(id){
+        	var obj=document.getElementById(id);
+        	var index = obj.selectedIndex;
+        	var val = obj.options[index].value;
+        	return val;
+        }
+		
+		function setType(){
+			removeAllSOP("deviceTypeSearch");
+    		addSOP("deviceTypeSearch", "== 选择类型 ==", "null");
+			addSOP("deviceTypeSearch", "DELL", "DELL");
+			addSOP("deviceTypeSearch", "PAD", "PAD");
+			addSOP("deviceTypeSearch", "MAC", "MAC");
+			selectSOP("deviceTypeSearch", "null");
+		}
+		
+		function sendDeviceInfo(){
+			alert("asdfasdf");
+			var params = {
+				"device.id" : document.getElementById("id").value,
+				"device.name" : document.getElementById("name").value,
+				"device.service_tag" : document.getElementById("service_tag").value,
+				"device.status" : 0,
+				"device.type" : choice("type")
+			};
+			$.ajax({
+				type : "post",
+				url : "device_json/device_json_addDevice.action",
+				data : params,
+				dataType : "text",
+				success : function(json){
+					var obj = $.parseJSON(json);
+					if(obj.result == "true"){
+						window.location.href="user/user_success";
+					}
+				},
+				error : function(json){
+					alert("error " + json);
+				}
+			});
+		}
+		window.onload = function () {
+			setType();
+		}
+	</script>
 </head>
+	<body>
+	    <jsp:include page="menu.jsp" />
+	    <div id="content" style="min-height: 1000px">
+            <div id="content-header">
+                <h1>设备录入</h1>
+                <div class="btn-group">
+                    <a class="btn btn-large tip-bottom" title="Manage Files">
+                    	<i class="icon-file"></i>
+                    	<span class="label label-important">1</span>
+                    </a>
+                    <a class="btn btn-large tip-bottom" title="Manage Users">
+                    	<i class="icon-user"></i>
+                    	<span class="label label-important">2</span>
+                    </a>
+                    <a class="btn btn-large tip-bottom" title="Manage Comments">
+                    	<i class="icon-comment"></i>
+                    	<span class="label label-important">5</span>
+                    </a>
+                    <a class="btn btn-large tip-bottom" title="Manage Orders">
+                    	<i class="icon-shopping-cart"></i>
+                    	<span class="label label-important">1</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span11">
+                    <div class="alert alert-info">
+                        Welcome in the <strong>Dalian University of Technology</strong>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Happy New Year!
+                        <a href="#" data-dismiss="alert" class="close">×</a>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-title">
+                        	<span class="icon"><i class="icon-signal"></i></span>
+                        	<h5>Site Statistics</h5>
+                        	<div class="buttons">
+                        		<a href="#" class="btn btn-mini"><i class="icon-refresh"></i> Update data</a>
+                        	</div>
+                        </div>
+                        <div class="span12"></div>
+	                    <div class="span12">
+		                    <div class="span8">
+		                    	<form class="form-horizontal" role="form" >
+		                    		<div class="form-group" id="inputID">
+										<label class="col-sm-2 control-label" for="id" > <big>ID</big></label>
+										<div class="col-sm-3">
+									    	<input type="text" class="form-control" id="id" type="text" 
+									    		placeholder="输入设备ID" >
+									    </div>
+									</div>
+		                    		<div class="form-group" id="inputName">
+										<label class="col-sm-2 control-label" for="name" > <big>名&nbsp;&nbsp;称</big></label>
+										<div class="col-sm-3">
+									    	<input type="text" class="form-control" id="name" type="text" 
+									    		placeholder="输入结点名称" >
+									    </div>
+									</div>
+									
+									
+									<div class="form-group" id="inputType">
+										<label class="col-sm-2 control-label" for="type" > <big>类&nbsp;&nbsp;型</big></label>
+										<div class="col-sm-3">
+										    <select id="type" class="form-control" style="width:80%;">
+										    </select>
+										</div>
+									</div>
+									<div class="form-group" id="inputServiceTag">
+										<label class="col-sm-2 control-label" for="service_tag" > <big>标&nbsp;&nbsp;签</big></label>
+										
+										<div class="col-sm-3">
+											<input type="text" class="form-control" id="service_tag" type="text" 
+									    		placeholder="输入设备标签" >
+									    </div>
+									</div>
+							
+									<div class="form-group" id="output">
+			                            <div class="col-sm-2"></div>
+			                            <div class="col-sm-3">
+			                                <input type="button" class="btn btn-success" onclick="checkForm()" value="添加新结点">
+			                                </input>
+			                            </div>
+			                        </div>
+								</form>
+							</div>
+		                </div>
+		                <div class="span12"></div>
+                    </div>                  
+                </div>
+            </div>
 
-<body>
-<div id="header">
-   <div id="logo"><h1><a href="http://www.helloweba.com" title="返回helloweba首页">helloweba</a></h1></div>
+            <div class="row-fluid">
+                <div id="footer" class="span12">
+                    2014 &copy; Dlut Admin. Brought to you by <a href="https://wrapbootstrap.com/user/diablo9983">diablo9983</a>
+                </div>
+            </div>
+        </div>
+        <s:debug></s:debug>
+        <script src="js/excanvas.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.ui.custom.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.flot.min.js"></script>
+		<script src="js/jquery.flot.resize.min.js"></script>
+		<script src="js/jquery.peity.min.js"></script>
+		<script src="js/fullcalendar.min.js"></script>
+		<script src="js/unicorn.js"></script>
+		<script src="js/unicorn.dashboard.js"></script>
+		<script src="js/raphael.js"></script>
+	</body>
+    
 </div>
-<div id="main">
-   <h2 class="top_title"><a href="http://www.helloweba.com/view-blog-168.html">日期选择器：jquery datepicker的使用</a></h2>
-   <div class="demo">
-      <h4>1、默认格式：<span>yy-mm-dd</span></h4>
-      <p>日期：<input type="text" id="date_1" readonly /></p>
-   </div>
-   <div class="demo" id="s2">
-      <h4>2、格式化日期：<span>yy年mm月dd日</span></h4>
-      <p>日期：<input type="text" id="date_2" readonly /></p>
-   </div>
-   <div class="demo" id="s3">
-      <h4>3、设置日期可选范围：<span>当前日期前30天</span></h4>
-      <p>日期：<input type="text" id="date_3" readonly /></p>
-   </div>
-   <div class="demo" id="s4">
-      <h4>4、关联同步不同的日期格式：</h4>
-      <p>日期：<input type="text" id="date_4" readonly /> &nbsp; <input type="text" id="alternate"  style="width:150px" /></p>
-   </div>
-   <div class="demo">
-      <h4>5、直接显示日历：</h4>
-      <div id="datepicker"></div> 
-   </div>
-   <div class="demo">
-      <h4>6、显示日期所在一年中的周数：</h4>
-      <p>日期：<input type="text" id="date_6" readonly /></p>
-   </div>
-   <div class="demo" id="s7">
-      <h4>7、显示连续的3个月的日历：</h4>
-      <p>日期：<input type="text" id="date_7" readonly /></p>
-   </div>
-   <div class="demo" id="s8">
-      <h4>8、通过点击图标触发显示日历：</h4>
-      <p>日期：<input type="text" id="date_8" readonly style="height:16px" /></p>
-   </div>
-   <div class="demo" id="s9">
-      <h4>9、选中日期后触发事件：</h4>
-      <p>日期：<input type="text" id="date_9" readonly /></p>
-   </div>
-</div>
-<div id="footer">
-    <p>Powered by helloweba.com  允许转载、修改和使用本站的DEMO，但请注明出处：<a href="http://www.helloweba.com">www.helloweba.com</a></p>
-</div>
+</div></div>
+
 </body>
 </html>

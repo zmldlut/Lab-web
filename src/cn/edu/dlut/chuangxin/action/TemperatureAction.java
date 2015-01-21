@@ -62,22 +62,10 @@ public class TemperatureAction extends BaseAction {
 		ArrayList<Temperature> dataList = null;
 		resultMsg = new HashMap<String, Object>();
 		try {
-			if(start == null || end == null){
-				dataList = ( (TemperatureDaoProxy) daoProxy).getTemperature(page, pageCount);
-			}
-			else{
-				SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-				dataList = ( (TemperatureDaoProxy) daoProxy).getTemperature(date.parse(start), date.parse(end), page, pageCount);
-			}
-			
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+			dataList = ( (TemperatureDaoProxy) daoProxy).getTemperature(date.parse(start), date.parse(end), node_id, page, pageCount);
 			int sz = 0;
-			if(start == null || end == null){
-				sz = ( (TemperatureDaoProxy) daoProxy).getTemperatureSize() + pageCount - 1;
-			}
-			else{
-				SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-				sz = ( (TemperatureDaoProxy) daoProxy).getTemperatureSize(date.parse(start), date.parse(end)) + pageCount - 1;
-			}
+			sz = ( (TemperatureDaoProxy) daoProxy).getTemperatureSize(date.parse(start), date.parse(end), node_id) + pageCount - 1;
 			resultMsg.put("maxPage", sz / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

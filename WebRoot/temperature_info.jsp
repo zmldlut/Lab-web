@@ -114,7 +114,37 @@
             	search();
             }
             
+            function setType(){
+            	var params = {
+            		"type" : 1,
+            		"page" : 1,
+            		"pageCount" : 100
+            	};
+            	node_id = -1;
+    			$.ajax({
+    				type : "post",
+    				url : "node_json/node_json_getNodes.action",
+    				data : params,
+    				dataType : "text",
+    				success : function(json){
+    					var obj = $.parseJSON(json);
+    					addSOP("type", "== 选择结点 ==", -1);
+    					for(var i = 0; i < obj.result.length; i++){
+    						addSOP("type", obj.result[i].name, obj.result[i].id);
+    					}
+    					selectSOP("type", -1);
+    				},
+    				error : function(json){
+    					alert("error " + json);
+    				}
+    			});
+            }
+            
         	function search(){
+        		var obj=document.getElementById("type");
+            	var index = obj.selectedIndex;
+	            var val = obj.options[index].value;
+	        	node_id = parseInt(val);
         		delTR();
         		var params = {
     				"page" : page,
@@ -125,7 +155,7 @@
     			};
    				$.ajax({
    					type : "post",
-   					url : "admin/getTemperatureInfoAction.action",
+   					url : "sensor_json/temperature_json_getTemperatureInfoAction.action",
    					data : params,
    					dataType : "text",
    					success : function(json){
@@ -180,6 +210,7 @@
         			}
         		});
         		$("#endDP").datepicker("setDate", "-0");
+        		setType();
         		search();
         		//setInfo();
 			}
@@ -189,7 +220,7 @@
     <jsp:include page="menu.jsp" />
     <div id="content" style="min-height: 2000px">
             <div id="content-header">
-                <h1>学生信息</h1>
+                <h1>温度信息</h1>
                 <div class="btn-group">
                     <a class="btn btn-large tip-bottom" title="Manage Files">
                     	<i class="icon-file"></i>
@@ -223,16 +254,10 @@
 	                        	Search : <input type="text" id="startDP" readonly style="width: 5%;height: 80%;margin-top: 0.25%" />
 	                        	<i class="icon-arrow-right"></i>
 	                        	<input type="text" id="endDP" readonly style="width: 5%;height: 80%;margin-top: 0.25%" />
-	                        	<select id="searchMethod" class="form-control" style="width: 5%;height: 80%;margin-top: 0.25%" class="select" onchange="searchMethod()">
-	                        		<option value="0" selected="selected">全部结点</option>
-	                        		<option value="1" >1</option>
-	                        		<option value="2" >2</option>
+	                        	<select id="type" class="form-control" style="width: 10%;height: 80%;margin-top: 0.25%" class="select">
                         		</select>
 	                        	<a href="javascript:search()" class="btn btn-mini" ><i class="icon-search"></i></a>
                         	</p>
-                        	<div class="buttons">
-                        		<a class="btn btn-mini" ><i class="icon-refresh"></i> Update data</a>
-                        	</div>
                         </div>
                         <div class="span11"> </div>
 	                    <div class="span4">

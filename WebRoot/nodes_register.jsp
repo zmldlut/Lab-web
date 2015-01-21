@@ -103,7 +103,7 @@
 				success : function(json){
 					var obj = $.parseJSON(json);
 					if(obj.result == "true"){
-						window.location.href="node_json/node_success";
+						window.location.href="user/user_success";
 					}
 				},
 				error : function(json){

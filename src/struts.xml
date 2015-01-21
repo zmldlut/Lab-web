@@ -72,23 +72,51 @@
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>
   	</package>
-
-	<package name="sensor" namespace="/sensor" extends="struts-default">
+  	
+  	<package name="sensor" namespace="/sensor" extends="struts-default">
         <action name="temperatureInfo" class="cn.edu.dlut.chuangxin.action.TemperatureAction" method="temperatureInfo">
             <result name="temperature_info">/temperature_info.jsp</result>
         </action>      
         <action name="humidityInfo" class="cn.edu.dlut.chuangxin.action.HumidityAction" method="humidityInfo">
-            <result name="temperature_info">/temperature_info.jsp</result>
+            <result name="humidity_info">/humidity_info.jsp</result>
         </action>    
+        <action name="pmInfo" class="cn.edu.dlut.chuangxin.action.PMAction" method="pmInfo">
+            <result name="pm_info">/pm_info.jsp</result>
+        </action>
+        <action name="lightInfo" class="cn.edu.dlut.chuangxin.action.LightAction" method="lightInfo">
+            <result name="light_info">/light_info.jsp</result>
+        </action>
     </package>
-    <package name="sensor_json" namespace="/sensor_json" extends="json-default">
-        <action name="getTemperatureInfoAction" class="cn.edu.dlut.chuangxin.action.TemperatureAction" method="getTemperatureInfoAction">
-    		<!-- 将返回类型设置为json -->
+  	
+  	<package name="sensor_json" namespace="/sensor_json" extends="json-default">
+        <action name="temperature_json_*" class="cn.edu.dlut.chuangxin.action.TemperatureAction" method="{1}">
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>     
-    	<action name="getHumidityInfoAction" class="cn.edu.dlut.chuangxin.action.HumidityAction" method="getHumidityInfoAction">
-    		<!-- 将返回类型设置为json -->
+    	<action name="humidity_json_*" class="cn.edu.dlut.chuangxin.action.HumidityAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    	<action name="pm_json_*" class="cn.edu.dlut.chuangxin.action.PMAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action> 
+    	<action name="light_json_*" class="cn.edu.dlut.chuangxin.action.LightAction" method="{1}">
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action> 
     </package>
+    
+    <package name="device" namespace="/device" extends="struts-default">  
+        <action name="device_*" class="cn.edu.dlut.chuangxin.action.DeviceAction" method="{1}">
+            <result name="devices_info">/devices_info.jsp</result>
+            <result name="devices_update">/devices_update.jsp</result>
+            <result name="devices_register">/devices_register.jsp</result>
+            <result name="register_success">/register_success.jsp</result>
+        </action>
+    </package>
+    <package name="device_json" namespace="/device_json" extends="json-default">
+    	<action name="device_json_*" class="cn.edu.dlut.chuangxin.action.DeviceAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+  	</package>
+  	
+  	
+  	
 </struts>
