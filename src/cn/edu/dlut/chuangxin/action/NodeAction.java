@@ -74,7 +74,8 @@ public class NodeAction extends BaseAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		resultMsg.put("maxPage", ((NodeDaoProxy) daoProxy).getNodeSize(type));
+		int sz = ((NodeDaoProxy) daoProxy).getNodeSize(type);
+		resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		resultMsg.put("result", dataList);
 		return SUCCESS;
 	}

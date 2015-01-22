@@ -56,7 +56,7 @@ public class LampAction extends BaseAction {
 		this.name = name;
 	}
 	
-	public String getCurtainsInfoAction(){
+	public String getLampsInfoAction(){
 		ArrayList<CurtainLamp> dataList = null;
 		resultMsg = new HashMap<String, Object>();
 		try {
@@ -64,7 +64,7 @@ public class LampAction extends BaseAction {
 			dataList = ((CurtainDaoProxy) daoProxy).getCurtains(date.parse(start), date.parse(end), name, node_id, page, pageCount);
 			int sz = 0;
 			sz = ((CurtainDaoProxy) daoProxy).getCurtainSize(date.parse(start), date.parse(end), name, node_id) + pageCount - 1;
-			resultMsg.put("maxPage", sz / pageCount);
+			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

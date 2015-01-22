@@ -65,7 +65,7 @@ public class UserInfoAction extends BaseAction{
 				dataList = ((StudentDaoProxy) daoProxy).getStudents(studentInfo, page, pageCount);
 				sz = ((StudentDaoProxy) daoProxy).getStudentsSize(studentInfo) + pageCount - 1;
 			}
-			resultMsg.put("maxPage", sz / pageCount);
+			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

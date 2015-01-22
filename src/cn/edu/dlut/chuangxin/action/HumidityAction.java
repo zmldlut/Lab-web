@@ -66,7 +66,7 @@ public class HumidityAction extends BaseAction {
 			dataList = ( (HumidityDaoProxy) daoProxy).getHumidity(date.parse(start), date.parse(end), node_id, page, pageCount);
 			int sz = 0;
 			sz = ( (HumidityDaoProxy) daoProxy).getHumiditySize(date.parse(start), date.parse(end), node_id) + pageCount - 1;
-			resultMsg.put("maxPage", sz / pageCount);
+			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

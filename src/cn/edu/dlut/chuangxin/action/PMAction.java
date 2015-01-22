@@ -68,7 +68,7 @@ public class PMAction extends BaseAction {
 			dataList = ((PM2_5DaoProxy) daoProxy).getPM2_5(date.parse(start), date.parse(end), node_id, page, pageCount);
 			int sz = 0;
 //			sz = ((PM2_5DaoProxy) daoProxy).getPM2_5Size(date.parse(start), date.parse(end), node_id) + pageCount - 1;
-			resultMsg.put("maxPage", sz / pageCount);
+			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

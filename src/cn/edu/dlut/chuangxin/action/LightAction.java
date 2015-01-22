@@ -66,7 +66,7 @@ public class LightAction extends BaseAction {
 			dataList = ( (LightDaoProxy) daoProxy).getLights(date.parse(start), date.parse(end), node_id, page, pageCount);
 			int sz = 0;
 			sz = ( (LightDaoProxy) daoProxy).getLightSize(date.parse(start), date.parse(end), node_id) + pageCount - 1;
-			resultMsg.put("maxPage", sz / pageCount);
+			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

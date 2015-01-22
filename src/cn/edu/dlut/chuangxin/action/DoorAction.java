@@ -59,12 +59,13 @@ public class DoorAction extends BaseAction {
 	public String getDoorsInfoAction(){
 		ArrayList<Door> dataList = null;
 		resultMsg = new HashMap<String, Object>();
+		System.out.println("name: "+name);
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 			dataList = ((DoorDaoProxy) daoProxy).getDoors(date.parse(start), date.parse(end), name, node_id, page, pageCount);
 			int sz = 0;
 			sz = ((DoorDaoProxy) daoProxy).getDoorSize(date.parse(start), date.parse(end), name, node_id) + pageCount - 1;
-			resultMsg.put("maxPage", sz / pageCount);
+			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
