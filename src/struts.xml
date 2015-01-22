@@ -117,6 +117,26 @@
     	</action>
   	</package>
   	
-  	
-  	
+  	<package name="controller" namespace="/controller" extends="struts-default">  
+        <action name="door_*" class="cn.edu.dlut.chuangxin.action.DoorAction" method="{1}">
+            <result name="door_info">/door_info.jsp</result>
+        </action>
+        <action name="curtain_*" class="cn.edu.dlut.chuangxin.action.CurtainAction" method="{1}">
+            <result name="curtain_info">/curtain_info.jsp</result>
+        </action>
+        <action name="lamp_*" class="cn.edu.dlut.chuangxin.action.LampAction" method="{1}">
+            <result name="lamp_info">/lamp_info.jsp</result>
+        </action>
+    </package>
+    <package name="controller_json" namespace="/controller_json" extends="json-default">
+    	<action name="door_json_*" class="cn.edu.dlut.chuangxin.action.DoorAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    	<action name="curtain_json_*" class="cn.edu.dlut.chuangxin.action.CurtainAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+    	<action name="lamp_json_*" class="cn.edu.dlut.chuangxin.action.LampAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+  	</package>
 </struts>
