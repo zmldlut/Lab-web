@@ -255,8 +255,11 @@
 				dataType : "text",
 				success : function(json){
 					var obj = $.parseJSON(json);
-					if(obj.result == "true"){
+					if(obj.result){
 						window.location.href="user/user_success";
+					}
+					else{
+						alert(obj.result);
 					}
 				},
 				error : function(json){

@@ -127,7 +127,11 @@
         <action name="lamp_*" class="cn.edu.dlut.chuangxin.action.LampAction" method="{1}">
             <result name="lamp_info">/lamp_info.jsp</result>
         </action>
+        <action name="controller_*" class="cn.edu.dlut.chuangxin.action.ControllerAction" method="{1}">
+            <result name="controller_center">/controller_center.jsp</result>
+        </action>
     </package>
+    
     <package name="controller_json" namespace="/controller_json" extends="json-default">
     	<action name="door_json_*" class="cn.edu.dlut.chuangxin.action.DoorAction" method="{1}">
     		<result type="json"><param name="root">resultMsg</param></result>
@@ -136,6 +140,18 @@
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>
     	<action name="lamp_json_*" class="cn.edu.dlut.chuangxin.action.LampAction" method="{1}">
+    		<result type="json"><param name="root">resultMsg</param></result>
+    	</action>
+  	</package>
+  	
+  	<package name="sign" namespace="/sign" extends="struts-default">  
+        <action name="sign_*" class="cn.edu.dlut.chuangxin.action.SignAction" method="{1}">
+            <result name="sign_info">/sign_info.jsp</result>
+        </action>
+    </package>
+    
+    <package name="sign_json" namespace="/sign_json" extends="json-default">
+    	<action name="sign_json_*" class="cn.edu.dlut.chuangxin.action.SignAction" method="{1}">
     		<result type="json"><param name="root">resultMsg</param></result>
     	</action>
   	</package>

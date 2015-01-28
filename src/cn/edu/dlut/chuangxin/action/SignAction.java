@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.zml.dao.factory.DaoFactory;
-import com.zml.dao.proxy.CurtainDaoProxy;
-import com.zml.dto.CurtainLamp;
+import com.zml.dao.proxy.SiginDaoProxy;
+import com.zml.model.SgRecord;
 
-public class CurtainAction extends BaseAction {
+public class SignAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -17,7 +17,7 @@ public class CurtainAction extends BaseAction {
 	private String start = "";
 	private String end = "";
 	private int node_id = 0;
-	private String name;
+	private String stdnum;
 
 	public int getPage() {
 		return page;
@@ -49,21 +49,21 @@ public class CurtainAction extends BaseAction {
 	public void setNode_id(int node_id) {
 		this.node_id = node_id;
 	}
-	public String getName() {
-		return name;
+	public String getStdnum() {
+		return stdnum;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setStdnum(String stdnum) {
+		this.stdnum = stdnum;
 	}
 	
-	public String getCurtainsInfoAction(){
-		ArrayList<CurtainLamp> dataList = null;
+	public String getSignsInfoAction(){
+		ArrayList<SgRecord> dataList = null;
 		resultMsg = new HashMap<String, Object>();
 		try {
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-			dataList = ((CurtainDaoProxy) daoProxy).getCurtains(date.parse(start), date.parse(end), name, node_id, page, pageCount);
+			dataList = ((SiginDaoProxy) daoProxy).getSigins(date.parse(start), date.parse(end), stdnum, node_id, page, pageCount);
 			int sz = 0;
-			sz = ((CurtainDaoProxy) daoProxy).getCurtainSize(date.parse(start), date.parse(end), name, node_id) + pageCount - 1;
+			sz = ((SiginDaoProxy) daoProxy).getSiginsSize(date.parse(start), date.parse(end), stdnum, node_id) + pageCount - 1;
 			resultMsg.put("maxPage", (sz + pageCount - 1) / pageCount);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -73,14 +73,14 @@ public class CurtainAction extends BaseAction {
         // page= page.getDatas(); 
 		return SUCCESS;
 	}
-	public String curtainInfo(){
-		return "curtain_info";
+	public String signInfo(){
+		return "sign_info";
 	}
 	
 	@Override
 	protected void setDaoProxy() {
 		try {
-			daoProxy = DaoFactory.getDaoInstance(CurtainDaoProxy.class);
+			daoProxy = DaoFactory.getDaoInstance(SiginDaoProxy.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

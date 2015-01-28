@@ -16,20 +16,18 @@
         <link rel="stylesheet" href="css/bootstrap-v2-2-1.min.css">
         <link rel="stylesheet" href="css/unicorn.main.css" />
         <link rel="stylesheet" href="css/unicorn.grey.css" class="skin-color" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
         <style type="text/css">
         	.shortselect{
         		width:80px; background:none; border:none;
 				display:block; overflow:hidden;
 				border:#61AC36 1px solid; border-right:none; background:url(arrow.gif) #fff no-repeat 62px 1px; display:block;
-		    }  
+		    }
         </style>
         <script language="javascript" type="text/javascript">
+        	var type = -1;
         	var page = 1;
-        	var maxPage = 1;
-        	var node_id = 0;
         	
-        	var arr=["node_id", "acq_time", "pm_value"];
+        	var arr=["id", "name", "location"];
         	function addTR(cols){
         		var table = document.getElementById("info");
         		var tr = table.insertRow();
@@ -53,16 +51,74 @@
         				tr.setAttribute("name", "student");
         			}
         		}
-        		for(var i = 0; i < arr.length; i++){
+        		var checkNum = 0;
+        		        		
+        		for(var i = 0; i <= arr.length; i++){
         			var td = tr.insertCell(i);
-        			td.setAttribute("text-align", "center");
-        			if(window.navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
-        				td.textContent = cols[arr[i]];
+        			if(i == 0){
+        				td.setAttribute("text-align", "center");
+        				var newInput = document.createElement("input"); 
+        				newInput.type = "button";
+        				newInput.value = "open";
+        				newInput.name = cols["id"];
+        				newInput.setAttribute("class", "btn btn-success");
+        				newInput.onclick = function (){
+        					if(newInput.value == "open"){
+        						newInput.value = "close";
+        						this.setAttribute("class", "btn btn-danger");
+        					}
+        					else{
+        						newInput.value = "open";
+        						this.setAttribute("class", "btn btn-success");
+        					}
+        				}
+        				td.appendChild(newInput);
         			}
         			else{
-        				td.innerText = cols[arr[i]];
+	        			td.setAttribute("text-align", "center");
+	        			td.value = cols["id"];
+	        			td.onclick = function (){
+	        				window.location.href="node/node_update.action?node.id=" + this.value;
+	        			}
+	        			if(window.navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
+	        				td.textContent = cols[arr[i-1]];
+	        			}
+	        			else{
+	        				td.innerText = cols[arr[i-1]];
+	        			}
         			}
         		}
+        	}
+        	
+        	function deleteNodeAjax(id){
+        		var params = {
+        			"node.id" : id
+        		};
+    			$.ajax({
+    				type : "post",
+    				url : "node_json/node_json_delNode.action",
+    				data : params,
+    				dataType : "text",
+    				success : function(json){
+    					setInfo();
+    				},
+    				error : function(json){
+    					alert("error " + json);
+    				}
+    			});
+        	}
+        	
+        	function deleteNode(){
+        		var objName= document.getElementsByName("delete");
+        		for(var i = 0; i < objName.length; i++){
+        			var obj = objName[i];
+        			if(obj.checked){
+        				deleteNodeAjax(obj.value);
+        			}
+        		}
+        		
+        		
+        		checkNum = 0;
         	}
         	
         	function delTR(){
@@ -77,7 +133,7 @@
         			return ;
         		}
         		page = page - 1;
-        		search();
+        		setInfo();
         	}
         	
         	function nxtPage(){
@@ -85,7 +141,7 @@
         			return ;
         		}
         		page = page + 1;
-        		search();
+        		setInfo();
         	}
         	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,51 +167,27 @@
             	var index = obj.selectedIndex;
             	var val = obj.options[index].value;
             	page = parseInt(val);
-            	search();
+            	setInfo();
             }
             
-            function setType(){
-            	var params = {
-               		"type" : 3,
-               		"page" : 1,
-               		"pageCount" : 100
-               	};
-               	node_id = -1;
-       			$.ajax({
-       				type : "post",
-       				url : "node_json/node_json_getNodes.action",
-       				data : params,
-       				dataType : "text",
-       				success : function(json){
-       					var obj = $.parseJSON(json);
-       					addSOP("type", "== 选择结点 ==", -1);
-       					for(var i = 0; i < obj.result.length; i++){
-       						addSOP("type", obj.result[i].name, obj.result[i].id);
-       					}
-       					selectSOP("type", -1);
-       				},
-       				error : function(json){
-       					alert("error " + json);
-       				}
-       			});
-            }
-            
-        	function search(){
-        		var obj=document.getElementById("type");
+            function nodeTypeSearch(){
+            	var obj=document.getElementById("nodeTypeSearch");
             	var index = obj.selectedIndex;
-	            var val = obj.options[index].value;
-	        	node_id = parseInt(val);
+            	var val = obj.options[index].value;
+            	type = val;
+            	setInfo();
+            }
+        	
+        	function setInfo(){
         		delTR();
         		var params = {
     				"page" : page,
     				"pageCount" : 20,
-    				"node_id" : node_id,
-    				"start" : $("#startDP").val(),
-    				"end" : $("#endDP").val()
+    				"type" : type
     			};
    				$.ajax({
    					type : "post",
-   					url : "sensor_json/pm_json_getPMInfoAction.action",
+   					url : "node_json/node_json_getNodes.action",
    					data : params,
    					dataType : "text",
    					success : function(json){
@@ -188,39 +220,39 @@
    				});
         	}
         	
+        	function setNodeType(){
+        		var params = {};
+   				$.ajax({
+   					type : "post",
+   					url : "node_json/node_type_json_getNodeTypes.action",
+   					data : params,
+   					dataType : "text",
+   					success : function(json){
+   						var obj = $.parseJSON(json);
+    					removeAllSOP("nodeTypeSearch");
+    					addSOP("nodeTypeSearch", "所有类型", -1);
+    					for(var i = 0; i < obj.result.length; i++){
+    						addSOP("nodeTypeSearch", obj.result[i].type, obj.result[i].id);
+    					}
+    					selectSOP("nodeTypeSearch", -1);
+   					},
+   					error : function(json){
+   						alert("error " + json);
+   					}
+   				});
+        	}
+        	
         	window.onload = function () {
-        		$("#startDP").datepicker({
-        			showOn: "button",
-        			buttonImage: "img/calendar.gif",
-        			buttonImageOnly: true,
-        			maxDate: 0,
-        			onSelect:function(dateText,inst){
-        				$("#endDP").datepicker("option","minDate",dateText);
-        			}
-        		});
-        		//$("#startDP").datepicker("set");
-        		$("#startDP").datepicker("setDate", "-7");
-        		$("#endDP").datepicker({
-        			showOn: "button",
-        			buttonImage: "img/calendar.gif",
-        			buttonImageOnly: true,
-        			maxDate: 0,
-        			onSelect:function(dateText,inst){
-        				$("#startDP").datepicker("option","maxDate",dateText);
-        			}
-        		});
-        		$("#endDP").datepicker("setDate", "-0");
-        		setType();
-        		search();
-        		//setInfo();
+        		setNodeType();
+        		setInfo();
 			}
 		</script>
     </head>
     <body>
     <jsp:include page="menu.jsp" />
-    <div id="content" style="min-height: 2000px">
+    <div id="content" style="min-height: 1000px">
             <div id="content-header">
-                <h1>PM2.5信息</h1>
+                <h1>控制中心</h1>
                 <div class="btn-group">
                     <a class="btn btn-large tip-bottom" title="Manage Files">
                     	<i class="icon-file"></i>
@@ -250,23 +282,21 @@
                         <div class="widget-title">
                         	<span class="icon"><i class="icon-signal"></i></span>
                         	<h5>Site Statistics</h5>
-                        	<p>
-	                        	Search : <input type="text" id="startDP" readonly style="width: 7%;height: 80%;margin-top: 0.25%" />
-	                        	<i class="icon-arrow-right"></i>
-	                        	<input type="text" id="endDP" readonly style="width: 7%;height: 80%;margin-top: 0.25%" />
-	                        	<select id="type" class="form-control" style="width: 10%;height: 80%;margin-top: 0.25%" class="select">
-                        		</select>
-	                        	<a href="javascript:search()" class="btn btn-mini" ><i class="icon-search"></i></a>
-                        	</p>
+                        	<select id="nodeTypeSearch" class="form-control" style="width: 12%;height: 80%;margin-top: 0.25%;" class="select" onchange="nodeTypeSearch()">
+                        	</select>
+                        	<div class="buttons">
+                        		<a href="#" class="btn btn-mini"><i class="icon-refresh"></i> Update data</a>
+                        	</div>
                         </div>
                         <div class="span11"> </div>
-	                    <div class="span4">
+	                    <div class="span8">
                             <table class="table">
                             	<thead>
 		                            <tr>
-					                    <th>结点编号</th>  
-					                    <th>时间</th>
-					                    <th>湿度</th>
+		                            	<th></th>
+					                    <th>ID</th>  
+					                    <th>结点名称</th>
+					                    <th>位置</th>
 					                </tr>  
 				                </thead>
 				                <tbody id="info">
@@ -277,6 +307,7 @@
 	                            <select id="pageNum" onchange="choice()" class="shortselect"></select>
 	                            <button type="button" class="btn btn-success" onclick="nxtPage()" id="nxtPage">下一页</button>
                             </div>
+                            
 	                    </div>
                     </div>                  
                 </div>
@@ -299,6 +330,5 @@
 		<script src="js/unicorn.js"></script>
 		<script src="js/unicorn.dashboard.js"></script>
 		<script src="js/raphael.js"></script>
-		<script type="text/javascript" src="js/jquery-ui-datepicker.js" ></script>
 	</body>
 </html>

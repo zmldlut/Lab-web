@@ -29,7 +29,7 @@
         	var maxPage = 1;
         	var node_id = 0;
         	
-        	var arr=["node_id", "acq_time", "pm_value"];
+        	var arr=["stdNum", "sgDate", "node_id"];
         	function addTR(cols){
         		var table = document.getElementById("info");
         		var tr = table.insertRow();
@@ -116,7 +116,7 @@
             
             function setType(){
             	var params = {
-               		"type" : 3,
+               		"type" : 0,
                		"page" : 1,
                		"pageCount" : 100
                	};
@@ -128,7 +128,7 @@
        				dataType : "text",
        				success : function(json){
        					var obj = $.parseJSON(json);
-       					addSOP("type", "== 选择结点 ==", -1);
+       					addSOP("type", "== 选择小组 ==", -1);
        					for(var i = 0; i < obj.result.length; i++){
        						addSOP("type", obj.result[i].name, obj.result[i].id);
        					}
@@ -151,11 +151,12 @@
     				"pageCount" : 20,
     				"node_id" : node_id,
     				"start" : $("#startDP").val(),
-    				"end" : $("#endDP").val()
+    				"end" : $("#endDP").val(),
+    				"stdnum" : $("#stdnum").val() == "" ? "%" : $("#stdnum").val()
     			};
    				$.ajax({
    					type : "post",
-   					url : "sensor_json/pm_json_getPMInfoAction.action",
+   					url : "sign_json/sign_json_getSignsInfoAction.action",
    					data : params,
    					dataType : "text",
    					success : function(json){
@@ -220,7 +221,7 @@
     <jsp:include page="menu.jsp" />
     <div id="content" style="min-height: 2000px">
             <div id="content-header">
-                <h1>PM2.5信息</h1>
+                <h1>签到管理</h1>
                 <div class="btn-group">
                     <a class="btn btn-large tip-bottom" title="Manage Files">
                     	<i class="icon-file"></i>
@@ -256,6 +257,7 @@
 	                        	<input type="text" id="endDP" readonly style="width: 7%;height: 80%;margin-top: 0.25%" />
 	                        	<select id="type" class="form-control" style="width: 10%;height: 80%;margin-top: 0.25%" class="select">
                         		</select>
+                        		<input type="text" id="stdnum" style="width: 5%;height: 80%;margin-top: 0.25%" />
 	                        	<a href="javascript:search()" class="btn btn-mini" ><i class="icon-search"></i></a>
                         	</p>
                         </div>
@@ -264,9 +266,9 @@
                             <table class="table">
                             	<thead>
 		                            <tr>
-					                    <th>结点编号</th>  
-					                    <th>时间</th>
-					                    <th>湿度</th>
+					                    <th>学号</th>  
+					                    <th>签到时间</th>
+					                    <th>签到结点</th>
 					                </tr>  
 				                </thead>
 				                <tbody id="info">

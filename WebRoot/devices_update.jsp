@@ -69,25 +69,13 @@
         var M = false;
         
         function setType(){
-			var params = {};
-			$.ajax({
-				type : "post",
-				url : "node_json/node_type_json_getNodeTypes.action",
-				data : params,
-				dataType : "text",
-				success : function(json){
-					var obj = $.parseJSON(json);
-					addSOP("type", "== 选择结点类型 ==", -1);
-					for(var i = 0; i < obj.result.length; i++){
-						addSOP("type", obj.result[i].type, obj.result[i].id);
-					}
-					selectSOP("type", -1);
-					setNodeInfo(${node.id});
-				},
-				error : function(json){
-					alert("error " + json);
-				}
-			});
+			removeAllSOP("type");
+    		addSOP("type", "== 选择类型 ==", "null");
+			addSOP("type", "DELL", "DELL");
+			addSOP("type", "PAD", "PAD");
+			addSOP("type", "MAC", "MAC");
+			selectSOP("type", "null");
+			setNodeInfo(${device.id});
 		}
 		
 		function sendStudentInfo(){
@@ -119,11 +107,11 @@
 		
 		function setNodeInfo(id){
 			var params = {
-					"node.id" : id
+					"device.id" : id
 				};
 				$.ajax({
 					type : "post",
-					url : "node_json/node_json_getNodeFromId.action",
+					url : "device_json/device_json_getDeviceFromId.action",
 					data : params,
 					dataType : "text",
 					success : function(json){
@@ -133,14 +121,8 @@
 						}
 						else{
 							document.getElementById("name").setAttribute("value", obj.result["name"]);
-							document.getElementById("location").setAttribute("value", obj.result["location"]);
-							selectSOP("type", parseInt(obj.result["type"]));
-							if(window.navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
-								document.getElementById("description").textContent = obj.result["description"];
-		        			}
-		        			else{
-		        				document.getElementById("description").innerText = obj.result["description"];
-		        			}
+							selectSOP("type", obj.result["type"]);
+							document.getElementById("service_tag").setAttribute("value", obj.result["service_tag"]);
 						}
 					},
 					error : function(json){
@@ -158,7 +140,7 @@
 	    <jsp:include page="menu.jsp" />
 	    <div id="content" style="min-height: 1000px">
             <div id="content-header">
-                <h1>结点信息修改</h1>
+                <h1>设备信息修改</h1>
                 <div class="btn-group">
                     <a class="btn btn-large tip-bottom" title="Manage Files">
                     	<i class="icon-file"></i>
@@ -200,12 +182,11 @@
 			                    		<div class="form-group" id="inputID">
 											<label class="col-sm-2 control-label" for="ID" > <big>ID</big></label>
 											<div class="col-sm-3">
-										    	<input type="text" class="form-control" id="ID" type="text" value = "${node.id}">
+										    	<input type="text" class="form-control" id="ID" type="text" value = "${device.id}">
 										    	</input>
 										    </div>
 										</div>
 									</fieldset>
-									<form class="form-horizontal" role="form" >
 		                    		<div class="form-group" id="inputName">
 										<label class="col-sm-2 control-label" for="name" > <big>名&nbsp;&nbsp;称</big></label>
 										<div class="col-sm-3">
@@ -214,13 +195,6 @@
 									    </div>
 									</div>
 									
-									<div class="form-group" id="inputLocation">
-										<label class="col-sm-2 control-label" for="location" > <big>位&nbsp;&nbsp;置</big></label>
-										<div class="col-sm-3">
-									    	<input type="text" class="form-control" id="location" type="text" 
-									    		placeholder="输入结点位置" >
-									    </div>
-									</div>
 									
 									<div class="form-group" id="inputType">
 										<label class="col-sm-2 control-label" for="type" > <big>类&nbsp;&nbsp;型</big></label>
@@ -229,17 +203,19 @@
 										    </select>
 										</div>
 									</div>
-									<div class="form-group" id="inputDescription">
-										<label class="col-sm-2 control-label" for="description" > <big>描&nbsp;&nbsp;述</big></label>
+									<div class="form-group" id="inputServiceTag">
+										<label class="col-sm-2 control-label" for="service_tag" > <big>标&nbsp;&nbsp;签</big></label>
+										
 										<div class="col-sm-3">
-											<textarea class="form-control" rows="3" id="description" placeholder="结点描述" ></textarea>
+											<input type="text" class="form-control" id="service_tag" type="text" 
+									    		placeholder="输入设备标签" >
 									    </div>
 									</div>
 							
 									<div class="form-group" id="output">
 			                            <div class="col-sm-2"></div>
 			                            <div class="col-sm-3">
-			                                <input type="button" class="btn btn-success" onclick="checkForm()" value="更新结点">
+			                                <input type="button" class="btn btn-success" onclick="checkForm()" value="更新设备">
 			                                </input>
 			                            </div>
 			                        </div>

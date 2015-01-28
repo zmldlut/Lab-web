@@ -212,7 +212,6 @@
                 </div>
             </div>
         </div>
-        <s:debug></s:debug>
         <script src="js/excanvas.min.js"></script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.ui.custom.js"></script>

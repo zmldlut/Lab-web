@@ -251,9 +251,9 @@
                         	<span class="icon"><i class="icon-signal"></i></span>
                         	<h5>Site Statistics</h5>
                         	<p>
-	                        	Search : <input type="text" id="startDP" readonly style="width: 5%;height: 80%;margin-top: 0.25%" />
+	                        	Search : <input type="text" id="startDP" readonly style="width: 7%;height: 80%;margin-top: 0.25%" />
 	                        	<i class="icon-arrow-right"></i>
-	                        	<input type="text" id="endDP" readonly style="width: 5%;height: 80%;margin-top: 0.25%" />
+	                        	<input type="text" id="endDP" readonly style="width: 7%;height: 80%;margin-top: 0.25%" />
 	                        	<select id="type" class="form-control" style="width: 10%;height: 80%;margin-top: 0.25%" class="select">
                         		</select>
 	                        	<a href="javascript:search()" class="btn btn-mini" ><i class="icon-search"></i></a>

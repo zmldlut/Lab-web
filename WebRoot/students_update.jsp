@@ -251,7 +251,7 @@
 				dataType : "text",
 				success : function(json){
 					var obj = $.parseJSON(json);
-					if(obj.result == "true"){
+					if(obj.result == true){
 						alert("更新成功");
 					}
 				},
@@ -302,7 +302,7 @@
 	    <jsp:include page="menu.jsp" />
 	    <div id="content" style="min-height: 1000px">
             <div id="content-header">
-                <h1>信息录入</h1>
+                <h1>用户信息修改</h1>
                 <div class="btn-group">
                     <a class="btn btn-large tip-bottom" title="Manage Files">
                     	<i class="icon-file"></i>

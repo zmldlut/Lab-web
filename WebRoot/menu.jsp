@@ -47,7 +47,7 @@
                     <a href="#"><i class="icon icon-th-list"></i> <span>结点管理</span> <span class="label">2</span></a>
                     <ul>
                         <li><a href="node/node_info.action">结点信息查询</a></li>
-                        <li><a href="node/node_register.action">增加结点</a></li>
+                        <li><a href="node/node_register.action">结点信息录入</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -62,15 +62,21 @@
                     <ul>
                         <li><a href="sensor/temperatureInfo.action">温度管理</a></li>
                         <li><a href="sensor/humidityInfo.action">湿度管理</a></li>
-                        <li><a href="sensor/pmInfo.action">PM值管理</a></li>
+                        <li><a href="sensor/pmInfo.action">PM2.5值管理</a></li>
                         <li><a href="sensor/lightInfo.action">光强管理</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="charts.html"><i class="icon icon-signal"></i> <span>门锁管理</span></a>
+                <li class="submenu">
+                    <a href="#"><i class="icon icon-signal"></i> <span>控制管理</span> <span class="label">4</span></a>
+                    <ul>
+                        <li><a href="controller/door_doorInfo.action">门锁管理</a></li>
+                        <li><a href="controller/curtain_curtainInfo.action">窗帘管理</a></li>
+                        <li><a href="controller/lamp_lampInfo.action">灯光管理</a></li>
+                        <li><a href="controller/controller_center.action">控制中心</a></li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="widgets.html"><i class="icon icon-inbox"></i> <span>签到管理</span></a>
+                    <a href="sign/sign_signInfo"><i class="icon icon-inbox"></i> <span>签到管理</span></a>
                 </li>
                 
             </ul>

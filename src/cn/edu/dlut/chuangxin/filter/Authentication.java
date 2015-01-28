@@ -37,10 +37,10 @@ public class Authentication implements Filter{
 			chain.doFilter(request, response);
 		}
 		else if(((HttpServletRequest) request).getRequestURI().indexOf("/admin/") != -1){
-			((HttpServletResponse)response).sendRedirect("http://localhost:8080/StrutsTags/login.action");
+			((HttpServletResponse)response).sendRedirect("http://localhost:8080/StrutsTags/admin/login.action");
 		}
 		else if(((HttpServletRequest) request).getRequestURI().endsWith(".jsp")){
-			((HttpServletResponse)response).sendRedirect("http://localhost:8080/StrutsTags/login.action");
+			((HttpServletResponse)response).sendRedirect("http://localhost:8080/StrutsTags/admin/login.action");
 		}
 		else{
 			chain.doFilter(request, response);

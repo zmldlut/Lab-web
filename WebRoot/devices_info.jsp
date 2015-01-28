@@ -52,7 +52,7 @@
         				tr.setAttribute("name", "student");
         			}
         		}
-        		        		
+        		var checkNum = 0;
         		for(var i = 0; i <= arr.length; i++){
         			var td = tr.insertCell(i);
         			if(i == 0){
@@ -95,7 +95,7 @@
         		};
     			$.ajax({
     				type : "post",
-    				url : "device_json/device_json_delNode.action",
+    				url : "device_json/device_json_delDevice.action",
     				data : params,
     				dataType : "text",
     				success : function(json){

@@ -51,6 +51,7 @@
         				tr.setAttribute("name", "student");
         			}
         		}
+        		var checkNum = 0;
         		        		
         		for(var i = 0; i <= arr.length; i++){
         			var td = tr.insertCell(i);
@@ -59,7 +60,7 @@
         				var newInput = document.createElement("input"); 
         				newInput.type = "checkbox";
         				newInput.name = "delete";
-        				newInput.value = cols["stdnum"];
+        				newInput.value = cols["id"];
         				newInput.onchange = function (){
         					if(this.checked){
         						checkNum ++;
@@ -88,13 +89,13 @@
         		}
         	}
         	
-        	function deleteStdAjax(stdnum){
+        	function deleteNodeAjax(id){
         		var params = {
-        			"studentInfo.stdnum" : stdnum
+        			"node.id" : id
         		};
     			$.ajax({
     				type : "post",
-    				url : "user_json/user_json_delStudent.action",
+    				url : "node_json/node_json_delNode.action",
     				data : params,
     				dataType : "text",
     				success : function(json){
@@ -106,12 +107,12 @@
     			});
         	}
         	
-        	function deleteStd(){
+        	function deleteNode(){
         		var objName= document.getElementsByName("delete");
         		for(var i = 0; i < objName.length; i++){
         			var obj = objName[i];
         			if(obj.checked){
-        				deleteStdAjax(obj.value);
+        				deleteNodeAjax(obj.value);
         			}
         		}
         		
@@ -301,7 +302,7 @@
 				                </tbody>
                             </table>
                             <div style="float:left" class="form-inline">
-	                            <button type="button" class="btn btn-danger" onclick="deleteStd()" id="deleteStd">删除</button>
+	                            <button type="button" class="btn btn-danger" onclick="deleteNode()" id="deleteStd">删除</button>
                             </div>
                             <div style="float:right" class="form-inline">
 	                            <button type="button" class="btn btn-success" onclick="prePage()" id="prePage">上一页</button>

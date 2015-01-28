@@ -93,6 +93,9 @@
 					if(obj.result == true){
 						window.location.href="user/user_success";
 					}
+					else{
+						alert(obj.result);
+					}
 				},
 				error : function(json){
 					alert("error " + json);
@@ -181,7 +184,7 @@
 									<div class="form-group" id="output">
 			                            <div class="col-sm-2"></div>
 			                            <div class="col-sm-3">
-			                                <input type="button" class="btn btn-success" onclick="checkForm()" value="添加新结点">
+			                                <input type="button" class="btn btn-success" onclick="checkForm()" value="添加新设备">
 			                                </input>
 			                            </div>
 			                        </div>
