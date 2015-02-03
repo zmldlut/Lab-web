@@ -26,33 +26,21 @@
         <script language="javascript" type="text/javascript">
         	var type = -1;
         	var page = 1;
+        	var maxPage = 1;
         	
         	var arr=["id", "name", "location"];
         	function addTR(cols){
         		var table = document.getElementById("info");
-        		var tr = table.insertRow();
-        		if(cols["is_here"] == false){
-        			if(window.navigator.userAgent.toLowerCase().indexOf("firefox") != -1){
-        				tr.setAttribute("class", "warning");
-        				tr.setAttribute("name", "student");        				
-        			}
-        			else{
-        				tr.setAttribute("class", "warning");
-        				tr.setAttribute("name", "student");
-        			}
-        		}
-        		else{
-        			if(window.navigator.userAgent.toLowerCase().indexOf("firefox") != -1){
-        				tr.setAttribute("class", "success");
-        				tr.setAttribute("name", "student");
-        			}
-        			else{
-        				tr.setAttribute("class", "success");
-        				tr.setAttribute("name", "student");
-        			}
-        		}
-        		var checkNum = 0;
-        		        		
+    			var tr = table.insertRow();
+        		if(window.navigator.userAgent.toLowerCase().indexOf("firefox") != -1){
+    				tr.setAttribute("class", "success");
+    				tr.setAttribute("name", "student");
+    			}
+    			else{
+    				tr.setAttribute("class", "success");
+    				tr.setAttribute("name", "student");
+    			}
+        		if(cols["id"] == 1 || cols["id"] == 2 || cols["id"] == 3) return ;
         		for(var i = 0; i <= arr.length; i++){
         			var td = tr.insertCell(i);
         			if(i == 0){
@@ -64,12 +52,32 @@
         				newInput.setAttribute("class", "btn btn-success");
         				newInput.onclick = function (){
         					if(newInput.value == "open"){
-        						newInput.value = "close";
-        						this.setAttribute("class", "btn btn-danger");
+        						if(this.name == 4){
+        							newInput.value = "open";
+        							door(this.name, 1);
+        						}
+        						else if(this.name == 5){
+        							newInput.value = "close";
+        							this.setAttribute("class", "btn btn-danger");
+        							curtain(this.name, 1);
+        						}
+        						else if(this.name == 6){
+        							newInput.value = "close";
+        							this.setAttribute("class", "btn btn-danger");
+        							lamp(this.name, 1);
+        						}
         					}
         					else{
-        						newInput.value = "open";
-        						this.setAttribute("class", "btn btn-success");
+        						if(this.name == 5){
+        							newInput.value = "open";
+            						this.setAttribute("class", "btn btn-success");
+            						curtain(this.name, 2);
+        						}
+        						else if(this.name == 6){
+        							newInput.value = "open";
+            						this.setAttribute("class", "btn btn-success");
+            						lamp(this.name, 2);
+        						}
         					}
         				}
         				td.appendChild(newInput);
@@ -90,35 +98,67 @@
         		}
         	}
         	
-        	function deleteNodeAjax(id){
+        	function lamp(node_id, cmd){
         		var params = {
-        			"node.id" : id
+        				"node_id" : node_id,
+        				"packetType" : 1006,
+        				"cmd" : cmd,
+        				"stdNum" : "1"
         		};
-    			$.ajax({
-    				type : "post",
-    				url : "node_json/node_json_delNode.action",
-    				data : params,
-    				dataType : "text",
-    				success : function(json){
-    					setInfo();
-    				},
-    				error : function(json){
-    					alert("error " + json);
-    				}
-    			});
+   				$.ajax({
+   					type : "post",
+   					url : "http://192.168.9.69:8080/Lab-demo/test/test_openDoor",
+   					data : params,
+   					dataType : "text",
+   					success : function(json){
+   						var obj = $.parseJSON(json);
+   						alert(obj.message);
+   					},
+   					error : function(json){
+   					}
+   				});
         	}
         	
-        	function deleteNode(){
-        		var objName= document.getElementsByName("delete");
-        		for(var i = 0; i < objName.length; i++){
-        			var obj = objName[i];
-        			if(obj.checked){
-        				deleteNodeAjax(obj.value);
-        			}
-        		}
-        		
-        		
-        		checkNum = 0;
+        	function curtain(node_id, cmd){
+        		var params = {
+        				"node_id" : node_id,
+        				"packetType" : 1005,
+        				"cmd" : cmd,
+        				"stdNum" : "1"
+        		};
+   				$.ajax({
+   					type : "post",
+   					url : "http://192.168.9.69:8080/Lab-demo/test/test_openDoor",
+   					data : params,
+   					dataType : "text",
+   					success : function(json){
+   						var obj = $.parseJSON(json);
+   						alert(obj.message);
+   					},
+   					error : function(json){
+   					}
+   				});
+        	}
+        	
+        	function door(node_id, cmd){
+        		var params = {
+        				"node_id" : node_id,
+        				"packetType" : 1003,
+        				"cmd" : cmd,
+        				"stdNum" : "1"
+        			};
+   				$.ajax({
+   					type : "post",
+   					url : "http://192.168.9.69:8080/Lab-demo/test/test_openDoor",
+   					data : params,
+   					dataType : "text",
+   					success : function(json){
+   						var obj = $.parseJSON(json);
+   						alert(obj.message);
+   					},
+   					error : function(json){
+   					}
+   				});
         	}
         	
         	function delTR(){
